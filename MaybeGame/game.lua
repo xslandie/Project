@@ -26,9 +26,11 @@ function scene:create( event )
 	background.x= display.contentCenterX
 	background.y= display.contentCenterY
 	
+	
 	player= display.newImageRect(sceneGroup,"axe.png",150,120)
 	player.x= display.contentCenterX
 	player.y= display.contentCenterY+120
+	physics.start()
 	physics.addBody(player,"static")
 	
 	
