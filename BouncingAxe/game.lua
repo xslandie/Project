@@ -10,7 +10,7 @@ local scene = composer.newScene()
 local player
 local physics= require("physics")
 
-
+local plat
 
 
 
@@ -25,13 +25,25 @@ function scene:create( event )
 	local background= display.newImageRect(sceneGroup,"background.jpg",800,1400)
 	background.x= display.contentCenterX
 	background.y= display.contentCenterY
+	local roof = display.newRect(display.contentCenterX, 0, display.contentWidth, 5) 
+    local leftW= display.newRect(0,display.contentCenterY,5,display.contentHeight)
+
+	
+	
+	plat = display.newImageRect( "platform.png", 300 , 50 )
+ plat.x= display.contentCenterX
+ plat.y= display.contentHeight-25
 	
 	
 	player= display.newImageRect(sceneGroup,"axe.png",150,120)
 	player.x= display.contentCenterX
-	player.y= display.contentCenterY+120
+	player.y= display.contentCenterY-200
 	physics.start()
-	physics.addBody(player,"static")
+	physics.addBody(player,"dynamic" ,{bounce=1})
+	physics.addBody(plat,"static")
+	physics.addBody( roof, "static", { friction=0.5, bounce=0.3 } )
+	physics.addBody( leftW, "static", { friction=0.5, bounce=0.3 } )
+	player.angularVelocity=10
 	
 	
 	
