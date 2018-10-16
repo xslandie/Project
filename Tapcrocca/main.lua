@@ -34,3 +34,5 @@ tapCount = tapCount + 1
 end
 
 croccantini:addEventListener( "tap", pushCroccantini )
+ 
+ dioporco
