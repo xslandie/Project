@@ -88,7 +88,7 @@ end
 
 
 local function createDinosaur()
-     local newDinosaur = display.newImageRect( mainGroup, "dinosaur.jpg" 102, 85 )
+     local newDinosaur = display.newImageRect( mainGroup, "dinosaur.jpg", 102, 85 )
 	 table.insert( dinosaurTable, newDinosaur )
 	 physics.addBody( newDinosaur, "dynamic", { radius=40, bounce=0.8 } )
 	 newDinosaur.myName = "dinosaur"
@@ -116,7 +116,7 @@ end
 
 local function fireBear()
  
-    local newBear = display.newImageRect( mainGroup, "bear.jpeg" 14, 40 )
+    local newBear = display.newImageRect( mainGroup, "bear.jpeg", 100, 240 )
     physics.addBody( newBear, "dynamic", { isSensor=true } )
     newBear.isBullet = true
     newBear.myName = "bear"
@@ -125,5 +125,21 @@ local function fireBear()
     newBear.y = putin.y
 	newBear:toBack()
 	
-	transition.to( newBear, { y=-40, time=500, } )
+	transition.to( newBear, { y=-40, time=1000, 
+	onComplete = function() display.remove( newBear ) end
+	} )
+end
+
+putin:addEventListener( "tap", fireBear )
+local function dragPutin( event )
+ 
+ local putin = event.target
+ local phase = event.phase
+ 
+     if ( "began" == phase ) then
+        -- Set touch focus on the putin
+        display.currentStage:setFocus( putin )
+		-- Store initial offset position
+        putin.touchOffsetX = event.x - putin.x
+		end
 end
