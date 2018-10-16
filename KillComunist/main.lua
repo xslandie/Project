@@ -68,7 +68,7 @@ local background = display.newImageRect( backGroup, "background.jpg", 800, 1400 
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
-putin = display.newImageRect( mainGroup,"gameObject.png", 150, 110 )
+putin = display.newImageRect( mainGroup,"gameObject.png", 250, 210 )
 putin.x = display.contentCenterX
 putin.y = display.contentCenterY +200
 physics.addBody( putin, { radius=30, isSensor=true } )
@@ -116,7 +116,7 @@ end
 
 local function fireBear()
  
-    local newBear = display.newImageRect( mainGroup, "bear.jpeg", 100, 240 )
+    local newBear = display.newImageRect( mainGroup, "bear.png", 100, 240 )
     physics.addBody( newBear, "dynamic", { isSensor=true } )
     newBear.isBullet = true
     newBear.myName = "bear"
