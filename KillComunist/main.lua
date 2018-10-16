@@ -53,6 +53,7 @@ local putin
 local gameLoopTimer
 local livesText
 local scoreText
+
 -- Set up Audio 
 inno = audio.loadStream("Sounds/inno_russia.mp3" )
 audio.play(inno, { loops = -1, fadein = 750, channel = 1 } )

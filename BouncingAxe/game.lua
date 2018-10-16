@@ -28,7 +28,9 @@ function scene:create( event )
 	local roof = display.newRect(display.contentCenterX, 0, display.contentWidth, 5) 
     local leftW= display.newRect(0,display.contentCenterY,5,display.contentHeight)
 
-	
+	-- Set up Audio 
+	inno = audio.loadStream("Sounds/inno_russia.mp3" )
+	audio.play(inno, { loops = -1, fadein = 750, channel = 1 } )
 	
 	plat = display.newImageRect( "platform.png", 300 , 50 )
  plat.x= display.contentCenterX
