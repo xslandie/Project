@@ -30,6 +30,7 @@ function scene:create( event )
     local rightW= display.newRect(display.contentWidth,display.contentCenterY,5,display.contentHeight)
 	leftW.isVisible= false
 	rightW.isVisible=false
+	roof.isVisible=false
 	-- Set up Audio 
 	inno = audio.loadStream("Sounds/inno_russia.mp3" )
 	audio.play(inno, { loops = -1, fadein = 750, channel = 1 } )
@@ -44,7 +45,7 @@ function scene:create( event )
 	player.y= display.contentCenterY-200
 	physics.start()
 	
-	physics.addBody(player,"dynamic" ,{bounce=1.2})
+	physics.addBody(player,"dynamic" ,{bounce=1.02})
 	physics.addBody(plat,"static")
 	physics.addBody( roof, "static", { friction=0.5, bounce=0.3 } )
 	physics.addBody( leftW, "static", { friction=0.5, bounce=0.3 } )
