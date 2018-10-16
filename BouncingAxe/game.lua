@@ -27,8 +27,9 @@ function scene:create( event )
 	background.y= display.contentCenterY
 	local roof = display.newRect(display.contentCenterX, 0, display.contentWidth, 5) 
     local leftW= display.newRect(0,display.contentCenterY,5,display.contentHeight)
-
-	
+    local rightW= display.newRect(display.contentWidth,display.contentCenterY,5,display.contentHeight)
+	leftW.isVisible= false
+	rightW.isVisible=false
 	
 	plat = display.newImageRect( "platform.png", 300 , 50 )
  plat.x= display.contentCenterX
@@ -39,10 +40,11 @@ function scene:create( event )
 	player.x= display.contentCenterX
 	player.y= display.contentCenterY-200
 	physics.start()
-	physics.addBody(player,"dynamic" ,{bounce=1})
+	physics.addBody(player,"dynamic" ,{bounce=1.2})
 	physics.addBody(plat,"static")
 	physics.addBody( roof, "static", { friction=0.5, bounce=0.3 } )
 	physics.addBody( leftW, "static", { friction=0.5, bounce=0.3 } )
+	physics.addBody( rightW, "static", { friction=0.5, bounce=0.3 } )
 	player.angularVelocity=10
 	
 	
