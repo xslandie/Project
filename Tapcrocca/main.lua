@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 local tapCount = 0
 
-local background = display.newImageRect( "background.jpg", 360, 570 )
+local background = display.newImageRect( "background.jpg", 800, 1400 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
