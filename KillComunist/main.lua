@@ -54,7 +54,7 @@ local gameLoopTimer
 local livesText
 local scoreText
 -- Set up Audio 
-audio.play(background, { loops = -1, fadein = 750, channel = 1 } )
+audio.play(inno, { loops = -1, fadein = 750, channel = 1 } )
 
 -- Set up display groups
 local backGroup = display.newGroup()  -- Display group for the background image
