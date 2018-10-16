@@ -7,7 +7,7 @@
 local physics = require( "physics" )
 physics.start()	 
 physics.setGravity( 0, 0 )
-inno = audio.loadStream("Sounds/inno_russia.mp3" ) 	 
+ 	 
 --Set Random Number Generator
 math.randomseed( os.time() )
 
@@ -54,6 +54,7 @@ local gameLoopTimer
 local livesText
 local scoreText
 -- Set up Audio 
+inno = audio.loadStream("Sounds/inno_russia.mp3" )
 audio.play(inno, { loops = -1, fadein = 750, channel = 1 } )
 
 -- Set up display groups
