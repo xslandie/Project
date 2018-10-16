@@ -84,7 +84,42 @@ end
 
 
 local function createDinosaur()
-     local newDinosaur = display.newImageRect( mainGroup, objectSheet, 1, 102, 85 )
+     local newDinosaur = display.newImageRect( mainGroup, "dinosaur.jpg" 102, 85 )
+	 table.insert( dinosaurTable, newDinosaur )
+	 physics.addBody( newDinosaur, "dynamic", { radius=40, bounce=0.8 } )
+	 newDinosaur.myName = "dinosaur"
+	 
+	 local whereFrom = math.random( 3 )
+	 
+	 if (whereFrom ==  1 ) then
+	         -- From the left
+        newDinosaur.x = -60
+        newDinosaur.y = math.random( 500 )
+        newDinosaur:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
+    elseif ( whereFrom == 2 ) then
+        -- From the top
+        newDinosaur.x = math.random( display.contentWidth )
+        newDinosaur.y = -60
+        newDinosaur:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
+    elseif ( whereFrom == 3 ) then
+        -- From the right
+        newDinosaur.x = display.contentWidth + 60
+        newDinosaur.y = math.random( 500 )
+        newDinosaur:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
+	 end
+	 newDinosaur:applyTorque( math.random( -6,6 ) )
+end
 
+local function fireBear()
  
+    local newBear = display.newImageRect( mainGroup, "bear.jpeg" 14, 40 )
+    physics.addBody( newBear, "dynamic", { isSensor=true } )
+    newBear.isBullet = true
+    newBear.myName = "bear"
+	
+	newBear.x = putin.x
+    newBear.y = putin.y
+	newBear:toBack()
+	
+	transition.to( newBear, { y=-40, time=500, } )
 end
