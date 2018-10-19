@@ -54,9 +54,9 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 	obj.limitLeft = limitLeft
 	obj.limitRight = limitRight
 	-- obj.isFixedRotation = true
-	obj.switchDirectionTime = 5000
+	obj.switchDirectionTime = 3000
 	obj.allowShoot = false
-	obj.shootVelocity = 2000
+	obj.shootVelocity = 1800
 	obj.fireImg = nil
 	obj.visionLength = 300
 	obj.withoutLimit = withoutLimit
@@ -95,6 +95,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 	end
 	
 	function obj:defaultActionOnVisualContactWithPlayerEnd(event)
+	
 		
 	end
 	
@@ -157,7 +158,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 	end
 	-- fire collision
 	function obj:customActionOnAiFireToPlayer(event)
-		
+		  event.other:removeSelf()
 	end
 	
 	function obj:customActionOnAiFireToPlayerEnd(event)
