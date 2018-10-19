@@ -95,7 +95,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 	end
 	
 	function obj:defaultActionOnVisualContactWithPlayerEnd(event)
-	
+	 
 		
 	end
 	
@@ -174,6 +174,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 	end
 	
 	function obj:addExtraAction()
+	        
 		
 	end
 
@@ -260,7 +261,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 
 	function obj:moveObjToPlayerPosition()
 		if(stalker) then
-			transition.moveTo( obj, {x = lastPlayerNoticedPosition, time = 2000} )
+			transition.moveTo( obj, {x = lastPlayerNoticedPosition,time = 200} )
 			obj.isFixedRotation = true
 			stalker = false			
 		end
@@ -276,10 +277,10 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 		physics.addBody( scanBeam, "dynamic" )
 		scanBeam.type = "scanBeam"
 		scanBeam.gravityScale = 0
-		scanBeam.alpha = 0
+		scanBeam.alpha = 0.5
 
 		--Make the object a "bullet" type object
-		-- scanBeam.isBullet = true
+		 --scanBeam.isBullet = true
 
 		--Make the object a sensor
 		scanBeam.isSensor = true		
@@ -291,9 +292,13 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 		-- end
 
 		if(obj.direction == 0 or obj.direction == 2) then
-			scanBeam:setLinearVelocity( -700,0 )			
+			scanBeam:setLinearVelocity( -700,0 )
+			
 		elseif(obj.direction == 1 or obj.direction == 3) then
+		
+			
 			scanBeam:setLinearVelocity( 700,0 )
+			
 		end
 		
 		---------------------
@@ -364,9 +369,9 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 		-- end
 
 		if(obj.direction == 0 or obj.direction == 2) then
-			fireBall:setLinearVelocity( -700,0 )			
+			fireBall:setLinearVelocity( -700,-100)			
 		elseif(obj.direction == 1 or obj.direction == 3) then
-			fireBall:setLinearVelocity( 700,0 )
+			fireBall:setLinearVelocity( 700,-100 )
 		end
 
 		
@@ -526,6 +531,7 @@ lib.newAI = function( _group, _img, _x, _y, _ai_type, _sprite )
 
 	
 	return obj
+
 end
 
 

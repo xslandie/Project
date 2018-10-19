@@ -54,13 +54,13 @@ function scene:create( event )
 	player.y= display.contentCenterY-200
 	
 		physics.start()
-	enemy=SimpleAI.newAI(sceneGroup, "Vegano1.jpg", display.contentWidth-50, display.contentHeight-100, "patrol")
+	enemy=SimpleAI.newAI(sceneGroup, "Vegano1.jpg", display.contentCenterX, display.contentHeight-100, "patrol")
 	enemy.fireImg = "bullet.png" -- add bullet image
     enemy.allowShoot = true
       --enemy.withoutLimit = true
-	function enemy:defaultActionOnAiCollisionWithPlayer(event)
-	 	enemy:remove( )
-end	
+	--function enemy:defaultActionOnAiCollisionWithPlayer(event)
+	 	--enemy:remove( )
+--end	
 
 	
 	physics.addBody(plat2,"static")
