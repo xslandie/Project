@@ -41,7 +41,9 @@ settings =
 	-- Plugins section
 	--
 	plugins =
-	{
+	{	
+	        
+	
 
 	},
 

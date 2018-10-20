@@ -9,8 +9,13 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 local player
 local physics= require("physics")
-
+local SimpleAI= require "plugin.SimpleAI"
 local plat
+local enemy
+
+local function onTap()
+         
+end         
 
 
 
@@ -26,8 +31,8 @@ function scene:create( event )
 	background.x= display.contentCenterX
 	background.y= display.contentCenterY
 	local roof = display.newRect(display.contentCenterX, 0, display.contentWidth, 5) 
-    local leftW= display.newRect(0,display.contentCenterY,5,display.contentHeight)
-    local rightW= display.newRect(display.contentWidth,display.contentCenterY,5,display.contentHeight)
+    local leftW= display.newRect(0,display.contentCenterY,3,display.contentHeight)
+    local rightW= display.newRect(display.contentWidth,display.contentCenterY,3,display.contentHeight)
 	leftW.isVisible= false
 	rightW.isVisible=false
 	roof.isVisible=false
@@ -38,19 +43,33 @@ function scene:create( event )
 	plat = display.newImageRect( "platform.png", 300 , 50 )
  plat.x= display.contentCenterX
  plat.y= display.contentHeight-25
+ 
+ local plat2= display.newImageRect("platform.png",100,50)
+ plat2.x= display.contentCenterX+100
+ plat2.y = display.contentCenterY-50
 	
-	
-	player= display.newImageRect(sceneGroup,"axe.png",150,120)
-	player.x= display.contentCenterX
+	player= display.newImageRect(sceneGroup,"axe.png",35,37)
+	player.type= "player"
+	player.x= display.contentCenterX+150
 	player.y= display.contentCenterY-200
-	physics.start()
 	
+		physics.start()
+	enemy=SimpleAI.newAI(sceneGroup, "Vegano1.jpg", display.contentCenterX, display.contentHeight-100, "patrol")
+	enemy.fireImg = "bullet.png" -- add bullet image
+    enemy.allowShoot = true
+      --enemy.withoutLimit = true
+	--function enemy:defaultActionOnAiCollisionWithPlayer(event)
+	 	--enemy:remove( )
+--end	
+
+	
+	physics.addBody(plat2,"static")
 	physics.addBody(player,"dynamic" ,{bounce=1.02})
 	physics.addBody(plat,"static")
 	physics.addBody( roof, "static", { friction=0.5, bounce=0.3 } )
 	physics.addBody( leftW, "static", { friction=0.5, bounce=0.3 } )
 	physics.addBody( rightW, "static", { friction=0.5, bounce=0.3 } )
-	player.angularVelocity=10
+	player.angularVelocity=-10
 	
 	
 	
