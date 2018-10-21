@@ -3,6 +3,7 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+<<<<<<< HEAD
 --variables+basic graphics
 local physics= require("physics")
 local background = display.newRect(display.contentCenterX,display.contentCenterY,1400,display.contentHeight)
@@ -27,3 +28,12 @@ physics.addBody(rightW,"static")
 physics.addBody(f1oor,"static")
 physics.addBody(paddle1,"dynamic")
 ball:setLinearVelocity(30,-300)
+=======
+
+local background = display.newRect(display.contentCenterX,display.contentCenterY,1400,display.contentHeight)
+background:setFillColor(0)
+
+local paddle1= display.newRect(0,display.contentCenterY,5,150)
+local paddle2= display.newRect(display.contentWidth,display.contentCenterY,5,150)
+local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
+>>>>>>> 14d0850c041f31454172994ccacb51c3f07432e6
