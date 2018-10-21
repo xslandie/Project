@@ -29,4 +29,7 @@ physics.addBody(f1oor,"static")
 physics.addBody(paddle1,"dynamic")
 ball:setLinearVelocity(30,-300)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 479138a4f2cd27acb174de39836a3288285295e4
