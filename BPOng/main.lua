@@ -3,6 +3,28 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+require "ssk2.loadSsk"
+_G.ssk.init()
+local function dragPaddle( event)
+  local paddle= event.target
+  local phase= event.phase
+  
+  
+  if("began" == phase) then
+  
+  display.currentStage:setFocus(paddle)
+  paddle.touchOffsetY= event.y - paddle.y
+  
+  elseif ("moved" ==phase) then
+  
+   paddle.y= event.y - paddle.touchOffsetY
+  
+  elseif ("ended" == phase or "cancelled" == phase) then
+  
+    display.currentStage:setFocus(nil)
+  end
+  return true
+end
 
 --variables+basic graphics
 local physics= require("physics")
@@ -26,7 +48,11 @@ physics.addBody(roof,"static")
 physics.addBody(leftW,"static")
 physics.addBody(rightW,"static")
 physics.addBody(f1oor,"static")
-physics.addBody(paddle1,"dynamic")
-ball:setLinearVelocity(30,-300)
+physics.addBody(paddle1,"static")
+paddle1.limitUp= 22
+paddle1.limitDown=22
+ball:setLinearVelocity(-30,-300)
+--ssk.misc.addSmartDrag(paddle1,{ retval = true,limitX =true})
 
+paddle1:addEventListener("touch",dragPaddle)
 
