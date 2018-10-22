@@ -3,8 +3,11 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+<<<<<<< HEAD
 require "ssk2.loadSsk"
 _G.ssk.init()
+=======
+>>>>>>> b4273d06801bdc75781e83fac9e6dfd5562a2733
 local function dragPaddle( event)
   local paddle= event.target
   local phase= event.phase
@@ -48,11 +51,17 @@ physics.addBody(roof,"static")
 physics.addBody(leftW,"static")
 physics.addBody(rightW,"static")
 physics.addBody(f1oor,"static")
+<<<<<<< HEAD
 physics.addBody(paddle1,"static")
 paddle1.limitUp= 22
 paddle1.limitDown=22
 ball:setLinearVelocity(-30,-300)
 --ssk.misc.addSmartDrag(paddle1,{ retval = true,limitX =true})
 
+=======
+physics.addBody(paddle1,"dynamic")
+ball:setLinearVelocity(-30,-300)
+physics.addBody(paddle1,"dynamic")
+>>>>>>> b4273d06801bdc75781e83fac9e6dfd5562a2733
 paddle1:addEventListener("touch",dragPaddle)
 
