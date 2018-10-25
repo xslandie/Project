@@ -27,7 +27,7 @@ local pass=display.contentHeight/5
 local xMin=40
 local xMax=display.contentWidth/2
 local yMin=pass
-local yMax=display.contentHeight
+local yMax=display.contentHeight-21
 local function dragPaddle( event )
 
 	local paddle = event.target
@@ -99,12 +99,19 @@ egg7.x = display.contentWidth - xbase
 egg7.y = ybase + 120
 egg8.x = display.contentWidth - xbase
 egg8.y = ybase + 180
+egg5:scale( -1, 1 )
+egg6:scale( -1, 1 )
+egg7:scale( -1, 1 )
+egg8:scale( -1, 1 )
 
 --local paddle1= display.newRect(80,display.contentCenterY,20,25)
-local paddle1=display.newImageRect( "Dinoknight.png", 80, 50)
+local paddle1=display.newImageRect( "Dinoknight.png", 40, 40)
 paddle1.x = 80
 paddle1.y = display.contentCenterY
-local paddle2= display.newRect(display.contentWidth-80,display.contentCenterY,20,25)
+local paddle2=display.newImageRect( "ScheleDinoWest.png", 50, 40)
+paddle2.x = display.contentWidth-80
+paddle2.y = display.contentCenterY
+paddle2:scale( 1, 1 )
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 paddle1.myName = "player"
@@ -130,8 +137,8 @@ physics.addBody(rightW,"static")
 physics.addBody(f1oor,"static")
 
 physics.addBody(paddle1,"static", { density=1000 })
-paddle1.limitUp= 22
-paddle1.limitDown=22
+
+
 ball:setLinearVelocity(-30,-300)
 --ssk.misc.addSmartDrag(paddle1,{ retval = true,limitX =true})
 
@@ -151,5 +158,6 @@ physics.addBody(egg8,"static")
 
 
 paddle1:addEventListener("touch",dragPaddle)
+ball:addEventListener("touch",dragPaddle)
 Runtime:addEventListener( "collision", onCollisionEggs)
 
