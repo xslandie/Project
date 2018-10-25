@@ -61,10 +61,12 @@ end
 --variables+basic graphics
 display.setStatusBar( display.HiddenStatusBar)
 local physics= require("physics")
-local background = display.newRect(display.contentCenterX,display.contentCenterY,1400,display.contentHeight)
-background:setFillColor(0)
+local background = display.newImage("background.jpg")
+background.x = display.contentCenterX
+background.y = display.contentCenterY
+background:scale( 0.305, 0.2252)
 
-local roof = display.newRect(display.contentCenterX, pass, display.contentWidth, 2) 
+	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth, 2) 
     local leftW= display.newRect(0,display.contentCenterY,2,display.contentHeight)
     local rightW= display.newRect(display.contentWidth,display.contentCenterY,2,display.contentHeight)
 	local f1oor = display.newRect(display.contentCenterX,display.contentHeight, display.contentWidth, 2)
@@ -75,14 +77,14 @@ local roof = display.newRect(display.contentCenterX, pass, display.contentWidth,
 
 local xbase = 30;
 local ybase = 100;
-local egg1=display.newImageRect( "egg.png", 15, 20)
-local egg2=display.newImageRect( "egg.png", 15, 20)
-local egg3=display.newImageRect( "egg.png", 15, 20)
-local egg4=display.newImageRect( "egg.png", 15, 20)
-local egg5=display.newImageRect( "egg.png", 15, 20)
-local egg6=display.newImageRect( "egg.png", 15, 20)
-local egg7=display.newImageRect( "egg.png", 15, 20)
-local egg8=display.newImageRect( "egg.png", 15, 20)
+local egg1=display.newImageRect( "egg.png", 20, 30)
+local egg2=display.newImageRect( "egg.png", 20, 30)
+local egg3=display.newImageRect( "egg.png", 20, 30)
+local egg4=display.newImageRect( "egg.png", 20, 30)	
+local egg5=display.newImageRect( "eggwest.png", 20, 30)
+local egg6=display.newImageRect( "eggwest.png", 20, 30)
+local egg7=display.newImageRect( "eggwest.png", 20, 30)
+local egg8=display.newImageRect( "eggwest.png", 20, 30)
 egg1.x = xbase
 egg1.y = ybase
 egg2.x = xbase
@@ -105,10 +107,10 @@ egg7:scale( -1, 1 )
 egg8:scale( -1, 1 )
 
 --local paddle1= display.newRect(80,display.contentCenterY,20,25)
-local paddle1=display.newImageRect( "Dinoknight.png", 40, 40)
+local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
 paddle1.x = 80
 paddle1.y = display.contentCenterY
-local paddle2=display.newImageRect( "ScheleDinoWest.png", 50, 40)
+local paddle2=display.newImageRect( "ScheleDinoWest.png", 70, 55, {density=1500})
 paddle2.x = display.contentWidth-80
 paddle2.y = display.contentCenterY
 paddle2:scale( 1, 1 )
@@ -131,10 +133,10 @@ physics.start()
 physics.setGravity(0,0)
 physics.addBody(ball,{radius=5,bounce=1})
 ball.isBullet=true
-physics.addBody(roof,"static")
-physics.addBody(leftW,"static")
-physics.addBody(rightW,"static")
-physics.addBody(f1oor,"static")
+physics.addBody(roof,"static",{density=2000, friction=0.5})
+physics.addBody(leftW,"static",{density=2000, friction=0.5})
+physics.addBody(rightW,"static",{density=2000, friction=0.5})
+physics.addBody(f1oor,"static",{density=2000, friction=0.5})
 
 physics.addBody(paddle1,"static", { density=1000 })
 
@@ -158,6 +160,6 @@ physics.addBody(egg8,"static")
 
 
 paddle1:addEventListener("touch",dragPaddle)
-ball:addEventListener("touch",dragPaddle)
+--ball:addEventListener("touch",dragPaddle)
 Runtime:addEventListener( "collision", onCollisionEggs)
 
