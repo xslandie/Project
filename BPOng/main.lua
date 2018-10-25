@@ -3,6 +3,7 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+
 local function onCollisionEggs(event)
 	local obj1 = event.object1
     local obj2 = event.object2
@@ -21,6 +22,7 @@ local function onCollisionEggs(event)
 				obj1:setLinearVelocity(-vx, -vy)
 			end
 		end					
+
 end
 
 local pass=display.contentHeight/5
@@ -38,20 +40,31 @@ local function dragPaddle( event )
 		display.currentStage:setFocus( paddle )
 		-- Store initial offset position
 		
+
+		paddle.touchOffsetX = event.x - paddle.x
+
 		--paddle.touchOffsetX = event.x - paddle.x
+
 		paddle.touchOffsetY = event.y - paddle.y
 
 	elseif ( "moved" == phase ) then
 		-- Move the paddle to the new touch position
+
+		paddle.x = event.x - paddle.touchOffsetX
+		if(paddle.x<xMin) then paddle.x=xMin end
+		if(paddle.x>xMax) then paddle.x=xMax end
+
 		--paddle.x = event.x - paddle.touchOffsetX
 		--if(paddle.x<xMin) then paddle.x=xMin end
 		--if(paddle.x>xMax) then paddle.x=xMax end
+
 		paddle.y = event.y - paddle.touchOffsetY
 		if(paddle.y<yMin) then paddle.y=yMin end
 		if(paddle.y>yMax) then paddle.y=yMax end
 
 	elseif ( "ended" == phase or "cancelled" == phase ) then
-		-- Release touch focus on the paddle
+
+		-- Release touch focus on the paddle
 		display.currentStage:setFocus( nil )
 	end
 
@@ -74,6 +87,11 @@ background:scale( 0.305, 0.2252)
 	--rightW.isVisible=false
 	--roof.isVisible=false
 	--f1oor.isVisible=false
+
+
+
+
+
 
 local xbase = 30;
 local ybase = 100;
@@ -110,10 +128,19 @@ egg8:scale( -1, 1 )
 local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
 paddle1.x = 80
 paddle1.y = display.contentCenterY
+<<<<<<< HEAD
 local paddle2=display.newImageRect( "ScheleDinoWest.png", 70, 55, {density=1500})
+=======
+
+
+
+
+local paddle2=display.newImageRect( "ScheleDinoWest.png", 50, 40)
+>>>>>>> 8140c34f157b4e8be78bbd6af76dbeba22a799d8
 paddle2.x = display.contentWidth-80
 paddle2.y = display.contentCenterY
 paddle2:scale( 1, 1 )
+
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 paddle1.myName = "player"
@@ -130,6 +157,7 @@ egg7.myName = "egg"
 egg8.myName = "egg"
 
 physics.start()
+
 physics.setGravity(0,0)
 physics.addBody(ball,{radius=5,bounce=1})
 ball.isBullet=true
@@ -140,14 +168,19 @@ physics.addBody(f1oor,"static",{density=2000, friction=0.5})
 
 physics.addBody(paddle1,"static", { density=1000 })
 
+paddle1.limitUp= 22
+paddle1.limitDown=22
+
+
+
 
 ball:setLinearVelocity(-30,-300)
 --ssk.misc.addSmartDrag(paddle1,{ retval = true,limitX =true})
 
 
-physics.addBody(paddle1,"static")
-ball:setLinearVelocity(-30,-300)
+
 physics.addBody(paddle2,"static")
+
 physics.addBody(egg1,"static")
 physics.addBody(egg2,"static")
 physics.addBody(egg3,"static")
