@@ -28,7 +28,7 @@ end
 local pass=display.contentHeight/5
 local xMin=40
 local xMax=display.contentWidth/2
-local yMin=pass
+local yMin=pass+25
 local yMax=display.contentHeight-21
 local function dragPaddle( event )
 
@@ -79,10 +79,10 @@ background.x = display.contentCenterX
 background.y = display.contentCenterY
 background:scale( 0.305, 0.2252)
 
-	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth, 2) 
+	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth, 10, {density=2000}) 
     local leftW= display.newRect(0,display.contentCenterY,2,display.contentHeight)
     local rightW= display.newRect(display.contentWidth,display.contentCenterY,2,display.contentHeight)
-	local f1oor = display.newRect(display.contentCenterX,display.contentHeight, display.contentWidth, 2)
+	local f1oor = display.newRect(display.contentCenterX,display.contentHeight, display.contentWidth, 20)
 	--leftW.isVisible= false
 	--rightW.isVisible=false
 	--roof.isVisible=false
@@ -128,15 +128,8 @@ egg8:scale( -1, 1 )
 local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
 paddle1.x = 80
 paddle1.y = display.contentCenterY
-<<<<<<< HEAD
+
 local paddle2=display.newImageRect( "ScheleDinoWest.png", 70, 55, {density=1500})
-=======
-
-
-
-
-local paddle2=display.newImageRect( "ScheleDinoWest.png", 50, 40)
->>>>>>> 8140c34f157b4e8be78bbd6af76dbeba22a799d8
 paddle2.x = display.contentWidth-80
 paddle2.y = display.contentCenterY
 paddle2:scale( 1, 1 )
