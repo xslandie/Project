@@ -3,6 +3,7 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+local AI= require "AI"
 
 local function onCollisionEggs(event)
 	local obj1 = event.object1
@@ -41,7 +42,7 @@ local function dragPaddle( event )
 		-- Store initial offset position
 		
 
-		paddle.touchOffsetX = event.x - paddle.x
+		--paddle.touchOffsetX = event.x - paddle.x
 
 		--paddle.touchOffsetX = event.x - paddle.x
 
@@ -50,9 +51,9 @@ local function dragPaddle( event )
 	elseif ( "moved" == phase ) then
 		-- Move the paddle to the new touch position
 
-		paddle.x = event.x - paddle.touchOffsetX
-		if(paddle.x<xMin) then paddle.x=xMin end
-		if(paddle.x>xMax) then paddle.x=xMax end
+		--paddle.x = event.x - paddle.touchOffsetX
+		--if(paddle.x<xMin) then paddle.x=xMin end
+		--if(paddle.x>xMax) then paddle.x=xMax end
 
 		--paddle.x = event.x - paddle.touchOffsetX
 		--if(paddle.x<xMin) then paddle.x=xMin end
@@ -74,6 +75,7 @@ end
 --variables+basic graphics
 display.setStatusBar( display.HiddenStatusBar)
 local physics= require("physics")
+physics.start()
 local background = display.newImage("background.jpg")
 background.x = display.contentCenterX
 background.y = display.contentCenterY
@@ -125,16 +127,27 @@ egg7:scale( -1, 1 )
 egg8:scale( -1, 1 )
 
 --local paddle1= display.newRect(80,display.contentCenterY,20,25)
-local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
-paddle1.x = 80
-paddle1.y = display.contentCenterY
-
-local paddle2=display.newImageRect( "ScheleDinoWest.png", 70, 55, {density=1500})
-paddle2.x = display.contentWidth-80
-paddle2.y = display.contentCenterY
-paddle2:scale( 1, 1 )
-
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
+local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
+paddle1.x = display.contentCenterX
+paddle1.y = display.contentHeight-25
+
+local sceneGroup = display.newGroup( );
+local paddle2= display.newImageRect("ScheleDinoWest.png",70,55, {density=1500})
+paddle2.x=display.contentWidth-80
+paddle2.y=display.contentCenterY
+paddle2:scale(1,1)
+local function onFrame(event)
+
+	--collision
+	
+	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,delay=200,time=50})
+	
+end
+Runtime:addEventListener("enterFrame",onFrame)	
+
+
+
 
 paddle1.myName = "player"
 paddle2.myName = "enemy"
@@ -149,7 +162,7 @@ egg6.myName = "egg"
 egg7.myName = "egg"
 egg8.myName = "egg"
 
-physics.start()
+
 
 physics.setGravity(0,0)
 physics.addBody(ball,{radius=5,bounce=1})
@@ -167,7 +180,7 @@ paddle1.limitDown=22
 
 
 
-ball:setLinearVelocity(-30,-300)
+ball:setLinearVelocity(-100,-250)
 --ssk.misc.addSmartDrag(paddle1,{ retval = true,limitX =true})
 
 
@@ -188,4 +201,5 @@ physics.addBody(egg8,"static")
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
 Runtime:addEventListener( "collision", onCollisionEggs)
+
 
