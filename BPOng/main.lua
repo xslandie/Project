@@ -41,7 +41,7 @@ local function dragPaddle( event )
 		-- Store initial offset position
 		
 
-		paddle.touchOffsetX = event.x - paddle.x
+		--paddle.touchOffsetX = event.x - paddle.x
 
 		--paddle.touchOffsetX = event.x - paddle.x
 
@@ -50,9 +50,9 @@ local function dragPaddle( event )
 	elseif ( "moved" == phase ) then
 		-- Move the paddle to the new touch position
 
-		paddle.x = event.x - paddle.touchOffsetX
-		if(paddle.x<xMin) then paddle.x=xMin end
-		if(paddle.x>xMax) then paddle.x=xMax end
+		--paddle.x = event.x - paddle.touchOffsetX
+		--if(paddle.x<xMin) then paddle.x=xMin end
+		--if(paddle.x>xMax) then paddle.x=xMax end
 
 		--paddle.x = event.x - paddle.touchOffsetX
 		--if(paddle.x<xMin) then paddle.x=xMin end
