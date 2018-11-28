@@ -10,7 +10,9 @@ local xMax=display.contentWidth/2
 local yMin=pass+25
 local yMax=display.contentHeight-21
 
-
+local function onClick(event)
+     
+end
 
 local function onCollisions(event)
 
@@ -61,7 +63,20 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		   if(obj2.y<=yMin-19)
 	       then transition.moveTo(obj2,{x=obj2.x,y=yMin,time=0})
             elseif(obj2.y>yMax) 
-			then transition.moveTo(obj2,{x=obj2.x,y=yMax,time=0}) end							
+			then transition.moveTo(obj2,{x=obj2.x,y=yMax,time=0}) end		
+         elseif(obj1.myName =="ball" and obj2.myName == "player")
+          then
+            
+			local vx,vy= obj1:getLinearVelocity()
+			 obj1:setLinearVelocity(-(vx+50),(vy+50),obj1.x,obj1.y)
+			 elseif(obj1.myName =="player" and obj2.myName == "ball")
+			 
+			 
+          then
+		  local vx,vy= obj2:getLinearVelocity()
+		  obj2:setLinearVelocity(-(vx+50),(vy+50),obj2.x,obj2.y)
+		  
+		 
 	
 	   
     end	
@@ -321,9 +336,11 @@ physics.addBody(egg9,"static")
 physics.addBody(egg10,"static")
 
 
-
+local kickBtn=display.newRect(display.contentCenterX*1.5+22,display.contentCenterY*1.5,display.contentWidth/2+44,display.contentHeight/2)
+kickBtn.isVisible=false
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
+kickBtn:addEventListener("tap",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
