@@ -189,30 +189,37 @@ local egg1=display.newImageRect( "egg.png", 20, 30)
 local egg2=display.newImageRect( "egg.png", 20, 30)
 local egg3=display.newImageRect( "egg.png", 20, 30)
 local egg4=display.newImageRect( "egg.png", 20, 30)	
-local egg5=display.newImageRect( "eggwest.png", 20, 30)
+local egg5=display.newImageRect("egg.png", 20, 30)
 local egg6=display.newImageRect( "eggwest.png", 20, 30)
 local egg7=display.newImageRect( "eggwest.png", 20, 30)
 local egg8=display.newImageRect( "eggwest.png", 20, 30)
+local egg9=display.newImageRect( "eggwest.png", 20, 30)
+local egg10=display.newImageRect("eggwest.png", 20,30)
 egg1.x = xbase-44
-egg1.y = ybase
+egg1.y = ybase 
 egg2.x = xbase-44
-egg2.y = ybase + 60
+egg2.y = ybase + 40
 egg3.x = xbase-44
-egg3.y = ybase + 120
+egg3.y = ybase + 80
 egg4.x = xbase-44
-egg4.y = ybase + 180
-egg5.x = display.contentWidth - xbase+44
-egg5.y = ybase
+egg4.y = ybase + 120
+egg5.x = xbase-44
+egg5.y = ybase +160
 egg6.x = display.contentWidth - xbase+44
-egg6.y = ybase + 60
+egg6.y = ybase 
 egg7.x = display.contentWidth - xbase+44
-egg7.y = ybase + 120
+egg7.y = ybase + 40
 egg8.x = display.contentWidth - xbase+44
-egg8.y = ybase + 180
-egg5:scale( -1, 1 )
+egg8.y = ybase + 80
+egg9.x = display.contentWidth - xbase+44
+egg9.y = ybase + 120
+egg10.x = display.contentWidth -xbase+44
+egg10.y = ybase +160
 egg6:scale( -1, 1 )
 egg7:scale( -1, 1 )
 egg8:scale( -1, 1 )
+egg9:scale( -1, 1 )
+egg10:scale ( -1, 1 )
 
 --local paddle1= display.newRect(80,display.contentCenterY,20,25)
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
@@ -270,6 +277,8 @@ egg5.myName = "egg"
 egg6.myName = "egg"
 egg7.myName = "egg"
 egg8.myName = "egg"
+egg9.myName = "egg"
+egg10.myName = "egg"
 
 
 
@@ -308,6 +317,8 @@ physics.addBody(egg5,"static")
 physics.addBody(egg6,"static")
 physics.addBody(egg7,"static")
 physics.addBody(egg8,"static")
+physics.addBody(egg9,"static")
+physics.addBody(egg10,"static")
 
 
 
