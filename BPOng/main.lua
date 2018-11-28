@@ -4,7 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 
-local function onCollisionEggs(event)
+local function onCollision(event)
 	local obj1 = event.object1
     local obj2 = event.object2
 	local phase = event.phase
@@ -20,6 +20,30 @@ local function onCollisionEggs(event)
 				display.remove(obj2)
 				local vx, vy = obj1:getLinearVelocity()
 				obj1:setLinearVelocity(-vx, -vy)
+		elseif (obj1.myName == "ball" and obj2.myName == "player")
+			then
+				local vx, vy = obj1:getLinearVelocity()
+				--obj1:setLinearVelocity(-vx, -vy)
+				obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
+				
+		elseif (obj1.myName == "player" and obj2.myName == "ball")
+			then
+				local vx, vy = obj2:getLinearVelocity()
+				--obj2:setLinearVelocity(-vx, -vy)
+				obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
+				
+		elseif (obj1.myName == "ball" and obj2.myName == "enemy")
+			then
+				local vx, vy = obj1:getLinearVelocity()
+				--obj1:setLinearVelocity(-vx, -vy)
+				obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
+				
+		elseif (obj1.myName == "enemy" and obj2.myName == "ball")
+			then				
+				local vx, vy = obj2:getLinearVelocity()
+				--obj2:setLinearVelocity(-vx, -vy)
+				obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
+				
 			end
 		end					
 
@@ -73,6 +97,32 @@ end
 
 --variables+basic graphics
 display.setStatusBar( display.HiddenStatusBar)
+
+local function startFrameRateCalculator(callbackFunction)
+    
+    local lastTimestampMs
+    local frameCounter = 0
+    
+    Runtime:addEventListener("enterFrame", function()
+            
+        frameCounter = frameCounter + 1
+        local currentTimestampMs = system.getTimer()
+            
+        if (not lastTimestampMs) then
+            lastTimestampMs = currentTimestampMs
+        end
+        
+        -- Calculate actual fps approximately four times every second
+        if (frameCounter >= (display.fps / 4)) then
+            local deltaMs = currentTimestampMs - lastTimestampMs            
+            local fps = frameCounter / (deltaMs / 1000) 
+            frameCounter = 0
+            lastTimestampMs = currentTimestampMs
+            callbackFunction(fps)
+        end
+    end)
+end
+
 local physics= require("physics")
 local background = display.newImage("background.jpg")
 background.x = display.contentCenterX
@@ -88,12 +138,26 @@ background:scale( 0.305, 0.2252)
 	--roof.isVisible=false
 	--f1oor.isVisible=false
 
+math.randomseed( os.time() )
+
+-- Setup a label to display the FPS value
+local fpsLabel = display.newText({
+        x = display.contentCenterX,
+        y = 20,
+        fontSize = 50,
+        font = native.systemFontBold,
+        text = "FPS: " .. math.round(display.fps) .. " prova"
+})
+fpsLabel:setFillColor(1,1,0)
+
+-- Start calculating FPS, and provide a callback function to update the label with current FPS value
+startFrameRateCalculator(function(fps) 
+    fpsLabel.text = "FPS: " .. math.round(fps) .. " prova"
+end)
 
 
 
-
-
-local xbase = 30;
+local xbase = 20;
 local ybase = 100;
 local egg1=display.newImageRect( "egg.png", 20, 30)
 local egg2=display.newImageRect( "egg.png", 20, 30)
@@ -151,9 +215,11 @@ egg8.myName = "egg"
 
 physics.start()
 
+physics.setPositionIterations(6)
 physics.setGravity(0,0)
 physics.addBody(ball,{radius=5,bounce=1})
 ball.isBullet=true
+ball.isSensor=false
 physics.addBody(roof,"static",{density=2000, friction=0.5})
 physics.addBody(leftW,"static",{density=2000, friction=0.5})
 physics.addBody(rightW,"static",{density=2000, friction=0.5})
@@ -187,5 +253,5 @@ physics.addBody(egg8,"static")
 
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-Runtime:addEventListener( "collision", onCollisionEggs)
+Runtime:addEventListener( "collision", onCollision)
 
