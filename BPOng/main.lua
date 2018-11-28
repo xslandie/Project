@@ -10,7 +10,10 @@ local xMax=display.contentWidth/2
 local yMin=pass+25
 local yMax=display.contentHeight-21
 
+
+
 local function onCollisions(event)
+
 	local obj1 = event.object1
     local obj2 = event.object2
 	local phase = event.phase
@@ -26,6 +29,7 @@ local function onCollisions(event)
 				display.remove(obj2)
 				local vx, vy = obj1:getLinearVelocity()
 				obj1:setLinearVelocity(-vx, -vy)
+
 			
 			
          elseif(obj1.myName == "enemy" and obj2.myName =="wall" )
@@ -62,6 +66,7 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 	   
     end	
 end
+
 end
 
 
@@ -109,12 +114,39 @@ end
 
 --variables+basic graphics
 display.setStatusBar( display.HiddenStatusBar)
+
+local function startFrameRateCalculator(callbackFunction)
+    
+    local lastTimestampMs
+    local frameCounter = 0
+    
+    Runtime:addEventListener("enterFrame", function()
+            
+        frameCounter = frameCounter + 1
+        local currentTimestampMs = system.getTimer()
+            
+        if (not lastTimestampMs) then
+            lastTimestampMs = currentTimestampMs
+        end
+        
+        -- Calculate actual fps approximately four times every second
+        if (frameCounter >= (display.fps / 4)) then
+            local deltaMs = currentTimestampMs - lastTimestampMs            
+            local fps = frameCounter / (deltaMs / 1000) 
+            frameCounter = 0
+            lastTimestampMs = currentTimestampMs
+            callbackFunction(fps)
+        end
+    end)
+end
+
 local physics= require("physics")
 physics.start()
 local background = display.newImage("background.jpg")
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 background:scale( 0.305, 0.2252)
+
 
 	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth+88, 10, {density=2000}) 
     local leftW= display.newRect(-44,display.contentCenterY,2,display.contentHeight)
@@ -131,10 +163,27 @@ background:scale( 0.305, 0.2252)
 	
 
 
+math.randomseed( os.time() )
+
+
+-- Setup a label to display the FPS value
+local fpsLabel = display.newText({
+        x = display.contentCenterX,
+        y = 20,
+        fontSize = 50,
+        font = native.systemFontBold,
+        text = "FPS: " .. math.round(display.fps) .. " prova"
+})
+fpsLabel:setFillColor(1,1,0)
+
+-- Start calculating FPS, and provide a callback function to update the label with current FPS value
+startFrameRateCalculator(function(fps) 
+    fpsLabel.text = "FPS: " .. math.round(fps) .. " prova"
+end)
 
 
 
-local xbase = 30;
+local xbase = 20;
 local ybase = 100;
 local egg1=display.newImageRect( "egg.png", 20, 30)
 local egg2=display.newImageRect( "egg.png", 20, 30)
@@ -224,9 +273,11 @@ egg8.myName = "egg"
 
 
 
+physics.setPositionIterations(6)
 physics.setGravity(0,0)
 physics.addBody(ball,{radius=5,bounce=1})
 ball.isBullet=true
+ball.isSensor=false
 physics.addBody(roof,"static",{density=2000, friction=0.5})
 physics.addBody(leftW,"static",{density=2000, friction=0.5})
 physics.addBody(rightW,"static",{density=2000, friction=0.5})
@@ -262,7 +313,9 @@ physics.addBody(egg8,"static")
 
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
+
 Runtime:addEventListener( "collision", onCollisions)
+
 
 
 
