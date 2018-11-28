@@ -4,6 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 local AI= require "AI"
+local physicsData = (require "shapedefs").physicsData(1)
 
 local function onCollision(event)
 	local obj1 = event.object1
@@ -24,26 +25,26 @@ local function onCollision(event)
 		elseif (obj1.myName == "ball" and obj2.myName == "player")
 			then
 				local vx, vy = obj1:getLinearVelocity()
-				--obj1:setLinearVelocity(-vx, -vy)
-				obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
+				obj1:setLinearVelocity(-vx-2, vy)
+				--obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
 				
 		elseif (obj1.myName == "player" and obj2.myName == "ball")
 			then
 				local vx, vy = obj2:getLinearVelocity()
-				--obj2:setLinearVelocity(-vx, -vy)
-				obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
+				obj2:setLinearVelocity(-vx-2, vy)
+				--obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
 				
 		elseif (obj1.myName == "ball" and obj2.myName == "enemy")
 			then
 				local vx, vy = obj1:getLinearVelocity()
-				--obj1:setLinearVelocity(-vx, -vy)
-				obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
+				obj1:setLinearVelocity(-vx-2, vy)
+				--obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
 				
 		elseif (obj1.myName == "enemy" and obj2.myName == "ball")
 			then				
 				local vx, vy = obj2:getLinearVelocity()
-				--obj2:setLinearVelocity(-vx, -vy)
-				obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
+				obj2:setLinearVelocity(-vx-2, vy)
+				--obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
 				
 			end
 		end					
@@ -126,6 +127,7 @@ end
 
 local physics= require("physics")
 physics.start()
+physics.setDrawMode( "hybrid" )
 local background = display.newImage("background.jpg")
 background.x = display.contentCenterX
 background.y = display.contentCenterY
@@ -161,14 +163,22 @@ end)
 
 local xbase = 20;
 local ybase = 100;
-local egg1=display.newImageRect( "egg.png", 20, 30)
-local egg2=display.newImageRect( "egg.png", 20, 30)
-local egg3=display.newImageRect( "egg.png", 20, 30)
-local egg4=display.newImageRect( "egg.png", 20, 30)	
-local egg5=display.newImageRect( "eggwest.png", 20, 30)
-local egg6=display.newImageRect( "eggwest.png", 20, 30)
-local egg7=display.newImageRect( "eggwest.png", 20, 30)
-local egg8=display.newImageRect( "eggwest.png", 20, 30)
+local egg1=display.newImage( "egg2.png")
+local egg2=display.newImage( "egg2.png")
+local egg3=display.newImage( "egg2.png")
+local egg4=display.newImage( "egg2.png")	
+physics.addBody( egg1, "static", physicsData:get("egg2") )
+physics.addBody( egg2, "static", physicsData:get("egg2") )
+physics.addBody( egg3, "static", physicsData:get("egg2") )
+physics.addBody( egg4, "static", physicsData:get("egg2") )
+local egg5=display.newImage( "eggwest2.png")
+local egg6=display.newImage( "eggwest2.png")
+local egg7=display.newImage( "eggwest2.png")
+local egg8=display.newImage( "eggwest2.png")
+physics.addBody( egg5, "static", physicsData:get("eggwest2") )
+physics.addBody( egg6, "static", physicsData:get("eggwest2") )
+physics.addBody( egg7, "static", physicsData:get("eggwest2") )
+physics.addBody( egg8, "static", physicsData:get("eggwest2") )
 egg1.x = xbase
 egg1.y = ybase
 egg2.x = xbase
@@ -192,15 +202,20 @@ egg8:scale( -1, 1 )
 
 --local paddle1= display.newRect(80,display.contentCenterY,20,25)
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
-local paddle1=display.newImageRect( "Dinoknight.png", 60, 50, {density=1500})
-paddle1.x = display.contentCenterX
-paddle1.y = display.contentHeight-25
+
+local paddle1=display.newImage( "Dinoknight2.png")
+paddle1.x = 80
+paddle1.y = display.contentCenterY
+physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+
 
 local sceneGroup = display.newGroup( );
-local paddle2= display.newImageRect("ScheleDinoWest.png",70,55, {density=1500})
+local paddle2= display.newImage("DinoWest2.png")
 paddle2.x=display.contentWidth-80
 paddle2.y=display.contentCenterY
-paddle2:scale(1,1)
+physics.addBody( paddle2, "static", physicsData:get("DinoWest2") )
+
+
 local function onFrame(event)
 
 	--collision
