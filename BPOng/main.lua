@@ -184,10 +184,10 @@ end
 local physics= require("physics")
 physics.start()
 --physics.setDrawMode( "hybrid" )
-local background = display.newImage("background.jpg")
+local background = display.newImageRect("background.png", 570, 360)
 background.x = display.contentCenterX
 background.y = display.contentCenterY
-background:scale( 0.305, 0.2252)
+background:scale( 1.18, 0.88)
 
 
 	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth+88, 10, {density=2000}) 
@@ -210,17 +210,17 @@ math.randomseed( os.time() )
 
 -- Setup a label to display the FPS value
 local fpsLabel = display.newText({
-        x = display.contentCenterX,
+        x = 20,
         y = 20,
-        fontSize = 50,
+        fontSize = 15,
         font = native.systemFontBold,
-        text = "FPS: " .. math.round(display.fps) .. " prova"
+        text = "FPS: " .. math.round(display.fps)
 })
 fpsLabel:setFillColor(1,1,0)
 
 -- Start calculating FPS, and provide a callback function to update the label with current FPS value
 startFrameRateCalculator(function(fps) 
-    fpsLabel.text = "FPS: " .. math.round(fps) .. " prova"
+    fpsLabel.text = "FPS: " .. math.round(fps)
 end)
 
 
@@ -228,21 +228,21 @@ end)
 local xbase = 20;
 local ybase = 100;
 
-local egg1=display.newImage( "egg2.png")
-local egg2=display.newImage( "egg2.png")
-local egg3=display.newImage( "egg2.png")
-local egg4=display.newImage( "egg2.png")
-local egg5=display.newImage( "egg2.png")	
+local egg1=display.newImageRect( "egg2.png", 20, 22)
+local egg2=display.newImageRect( "egg2.png", 20, 22)
+local egg3=display.newImageRect( "egg2.png", 20, 22)
+local egg4=display.newImageRect( "egg2.png", 20, 22)
+local egg5=display.newImageRect( "egg2.png", 20, 22)	
 physics.addBody( egg1, "static", physicsData:get("egg2") )
 physics.addBody( egg2, "static", physicsData:get("egg2") )
 physics.addBody( egg3, "static", physicsData:get("egg2") )
 physics.addBody( egg4, "static", physicsData:get("egg2") )
 physics.addBody( egg5, "static", physicsData:get("egg2") )
-local egg6=display.newImage( "eggwest2.png")
-local egg7=display.newImage( "eggwest2.png")
-local egg8=display.newImage( "eggwest2.png")
-local egg9=display.newImage( "eggwest2.png")
-local egg10=display.newImage( "eggwest2.png")
+local egg6=display.newImageRect( "eggwest2.png", 20, 22)
+local egg7=display.newImageRect( "eggwest2.png", 20, 22)
+local egg8=display.newImageRect( "eggwest2.png", 20, 22)
+local egg9=display.newImageRect( "eggwest2.png", 20, 22)
+local egg10=display.newImageRect( "eggwest2.png", 20, 22)
 physics.addBody( egg6, "static", physicsData:get("eggwest2") )
 physics.addBody( egg7, "static", physicsData:get("eggwest2") )
 physics.addBody( egg8, "static", physicsData:get("eggwest2") )
@@ -278,11 +278,10 @@ egg10:scale ( -1, 1 )
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 
-local paddle1=display.newImage( "Dinoknight2.png")
+local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
 paddle1.x = 80-44
 paddle1.y = display.contentCenterY
 physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-
 
 local sceneGroup = display.newGroup( );
 

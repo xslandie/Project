@@ -7,6 +7,7 @@ application =
 {
 	content =
 	{
+		
 		width = 320,
 		height = 480, 
 		scale = "letterbox",
@@ -14,12 +15,12 @@ application =
 		xAlign = "center",
         yAlign = "center",
 		
-		--[[
+		
 		imageSuffix =
 		{
-			    ["@2x"] = 2,
-			    ["@4x"] = 4,
+			    ["@2x"] = 1.3,
+			    ["@4x"] = 2,
 		},
-		--]]
+		
 	},
 }
