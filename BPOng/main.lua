@@ -4,7 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 local AI= require "AI"
-
+--system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
 
 local pass=display.contentHeight/5
@@ -12,8 +12,22 @@ local xMin=40
 local xMax=display.contentWidth/2
 local yMin=pass+25
 local yMax=display.contentHeight-21
+local clickedKick=false
+
+local function clickFalse()
+   clickedKick = false
+ 
+	
+end
 
 local function onClick(event)
+        print (" tapped!")
+	    clickedKick = true 
+		timer.performWithDelay(500, clickFalse)
+		
+		
+		
+	     
      
 end
 
@@ -36,17 +50,7 @@ local function onCollisions(event)
 				local vx, vy = obj1:getLinearVelocity()
 				obj1:setLinearVelocity(-vx, -vy)
 
-		elseif (obj1.myName == "ball" and obj2.myName == "player")
-			then
-				local vx, vy = obj1:getLinearVelocity()
-				obj1:setLinearVelocity(-vx-2, vy)
-				--obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
-				
-		elseif (obj1.myName == "player" and obj2.myName == "ball")
-			then
-				local vx, vy = obj2:getLinearVelocity()
-				obj2:setLinearVelocity(-vx-2, vy)
-				--obj2:applyLinearImpulse( 0.01, 0.01, obj2.x, obj2.y )
+		
 				
 		elseif (obj1.myName == "ball" and obj2.myName == "enemy")
 			then
@@ -92,15 +96,17 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 			then transition.moveTo(obj2,{x=obj2.x,y=yMax,time=0}) end		
          elseif(obj1.myName =="ball" and obj2.myName == "player")
           then
+		  if(clickedKick) then
             
 			local vx,vy= obj1:getLinearVelocity()
-			 obj1:setLinearVelocity(-(vx+50),(vy+50),obj1.x,obj1.y)
-			 elseif(obj1.myName =="player" and obj2.myName == "ball")
+			 obj1:setLinearVelocity(-(vx+500000),(vy+500000),obj1.x,obj1.y) end
+			 elseif(obj1.myName =="player" and obj2.myName == "ball")then
 			 
+			 if(clickedKick)
 			 
           then
 		  local vx,vy= obj2:getLinearVelocity()
-		  obj2:setLinearVelocity(-(vx+50),(vy+50),obj2.x,obj2.y)
+		  obj2:setLinearVelocity(-(vx+500000),(vy+500000),obj2.x,obj2.y)end
 		  
 		 
 	
@@ -290,11 +296,14 @@ local paddle2= display.newImage("DinoWest2.png")
 paddle2.x=display.contentWidth-80+44
 paddle2.y=display.contentCenterY
 physics.addBody( paddle2, "static", physicsData:get("DinoWest2") )
-
+local kickBtn=display.newRect(display.contentCenterX*1.5+22,display.contentCenterY*1.5,display.contentWidth/2+44,display.contentHeight/2)
+kickBtn.alpha = 0
+kickBtn.isHitTestable= true
 
 local function onFrame(event)
 
 	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
+	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
 	local vx, vy = ball:getLinearVelocity()
 	if (math.abs(vx)<100 and math.abs(vy)<100)
@@ -381,8 +390,8 @@ physics.addBody(egg9,"static")
 physics.addBody(egg10,"static")
 
 
-local kickBtn=display.newRect(display.contentCenterX*1.5+22,display.contentCenterY*1.5,display.contentWidth/2+44,display.contentHeight/2)
-kickBtn.isVisible=false
+
+
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
 kickBtn:addEventListener("tap",onClick)
