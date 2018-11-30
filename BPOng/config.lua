@@ -19,7 +19,7 @@ application =
 		imageSuffix =
 		{
 			    ["@2x"] = 1.3,
-			    ["@4x"] = 2,
+			    ["@4x"] = 2.6,
 		},
 		
 	},

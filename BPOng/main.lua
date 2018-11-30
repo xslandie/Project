@@ -22,10 +22,17 @@ end
 
 local function onClick(event)
         print (" tapped!")
+		
 	    clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
 		
-		
+		if event.phase == "began" then
+        display.getCurrentStage():setFocus( event.target, event.id )
+        --other code
+		end
+		if event.phase == "ended" or event.phase == "cancelled" then
+        display.getCurrentStage():setFocus( event.target, nil )
+		end
 		
 	     
      
@@ -123,6 +130,8 @@ local function dragPaddle( event )
 	local paddle = event.target
 	local phase = event.phase
 
+	
+	
 	if ( "began" == phase ) then
 		-- Set touch focus on the paddle
 		display.currentStage:setFocus( paddle )
@@ -244,11 +253,11 @@ physics.addBody( egg2, "static", physicsData:get("egg2") )
 physics.addBody( egg3, "static", physicsData:get("egg2") )
 physics.addBody( egg4, "static", physicsData:get("egg2") )
 physics.addBody( egg5, "static", physicsData:get("egg2") )
-local egg6=display.newImageRect( "eggwest2.png", 20, 22)
-local egg7=display.newImageRect( "eggwest2.png", 20, 22)
-local egg8=display.newImageRect( "eggwest2.png", 20, 22)
-local egg9=display.newImageRect( "eggwest2.png", 20, 22)
-local egg10=display.newImageRect( "eggwest2.png", 20, 22)
+local egg6=display.newImageRect( "egg4.png", 20, 22)
+local egg7=display.newImageRect( "egg4.png", 20, 22)
+local egg8=display.newImageRect( "egg4.png", 20, 22)
+local egg9=display.newImageRect( "egg4.png", 20, 22)
+local egg10=display.newImageRect( "egg4.png", 20, 22)
 physics.addBody( egg6, "static", physicsData:get("eggwest2") )
 physics.addBody( egg7, "static", physicsData:get("eggwest2") )
 physics.addBody( egg8, "static", physicsData:get("eggwest2") )
@@ -291,17 +300,20 @@ physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 
 local sceneGroup = display.newGroup( );
 
-local paddle2= display.newImage("DinoWest2.png")
+local paddle2= display.newImageRect("DinoViking.png", 50, 55)
 paddle2.x=display.contentWidth-80+44
 paddle2.y=display.contentCenterY
-physics.addBody( paddle2, "static", physicsData:get("DinoWest2") )
+physics.addBody( paddle2, "static", physicsData:get("DinoViking") )
+paddle2:scale(-1, 1)
+
+
 local kickBtn=display.newRect(display.contentCenterX*1.5+22,display.contentCenterY*1.5,display.contentWidth/2+44,display.contentHeight/2)
 kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
 local function onFrame(event)
 
-	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
+	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=8000,delay=5000})
 	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
 	local vx, vy = ball:getLinearVelocity()
@@ -393,7 +405,7 @@ physics.addBody(egg10,"static")
 
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("tap",onClick)
+kickBtn:addEventListener("touch",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
