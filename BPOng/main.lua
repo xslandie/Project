@@ -4,7 +4,7 @@
 --
 -----------------------------------------------------------------------------------------
 local AI= require "AI"
---system.activate("multitouch")
+system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
 
 local pass=display.contentHeight/5
@@ -134,7 +134,7 @@ local function dragPaddle( event )
 	
 	if ( "began" == phase ) then
 		-- Set touch focus on the paddle
-		display.currentStage:setFocus( paddle )
+		--display.currentStage:setFocus( paddle )
 		-- Store initial offset position
 		
 
@@ -289,7 +289,7 @@ egg8:scale( -1, 1 )
 egg9:scale( -1, 1 )
 egg10:scale ( -1, 1 )
 
---local paddle1= display.newRect(80,display.contentCenterY,20,25)
+
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 
@@ -297,6 +297,8 @@ local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
 paddle1.x = 80-44
 paddle1.y = display.contentCenterY
 physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+
+
 
 local sceneGroup = display.newGroup( );
 
@@ -313,7 +315,7 @@ kickBtn.isHitTestable= true
 
 local function onFrame(event)
 
-	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=8000,delay=5000})
+	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
 	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
 	local vx, vy = ball:getLinearVelocity()
