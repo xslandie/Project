@@ -26,21 +26,21 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -7, -18.5  ,  0, 23.5  ,  -2, 27.5  ,  -14, 27.5  ,  -25, -13.5  ,  -23, -20.5  ,  -10, -27.5  }
+                    pe_fixture_id = "DinoKnight", density = 1000, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 1 },
+                    shape = {   -7, -18  ,  -25, -13  ,  -23, -20  ,  -10, -27  }
                     }
                      ,
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   19, 22.5  ,  0, 23.5  ,  7, -5.5  ,  22, 6.5  ,  25, 15.5  }
+                    pe_fixture_id = "DinoKnight", density = 1000, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 1 },
+                    shape = {   19, 23  ,  -2, 28  ,  -14, 28  ,  -25, -13  ,  7, -5  ,  22, 7  ,  25, 16  }
                     }
                      ,
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   7, -5.5  ,  0, 23.5  ,  -7, -18.5  ,  2, -18.5  }
+                    pe_fixture_id = "DinoKnight", density = 1000, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 1 },
+                    shape = {   7, -5  ,  -25, -13  ,  -7, -18  ,  2, -18  }
                     }
                     
                     
@@ -54,21 +54,15 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   7, 27.5  ,  -3, 22.5  ,  -14, -3.5  ,  18, 13.5  ,  18, 26.5  }
+                    pe_fixture_id = "DinoWest", density = 1000, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 1 },
+                    shape = {   7, 27.5  ,  -18, 23.5  ,  -24, 15.5  ,  -25, 6.5  ,  -14, -3.5  ,  18, 13.5  ,  18, 26.5  }
                     }
                      ,
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    pe_fixture_id = "DinoWest", density = 1000, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 1 },
                     shape = {   -6, -25.5  ,  11, -26.5  ,  23, -15.5  ,  18, 13.5  ,  -14, -3.5  ,  -18, -14.5  }
-                    }
-                     ,
-                    {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -18, 23.5  ,  -24, 15.5  ,  -25, 6.5  ,  -14, -3.5  ,  -3, 22.5  }
                     }
                     
                     
@@ -82,14 +76,14 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    pe_fixture_id = "Egg", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 2, maskBits = 65535, groupIndex = 2 },
                     shape = {   -10, -3.5  ,  -7, -9.5  ,  10, -3.5  ,  10, 6.5  ,  5, 11.5  ,  -7, 11.5  }
                     }
                      ,
                     {
-                    pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
-                    filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
+                    pe_fixture_id = "Egg", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 2, maskBits = 65535, groupIndex = 2 },
                     shape = {   10, -3.5  ,  -7, -9.5  ,  4, -11.5  }
                     }
                     
@@ -104,15 +98,37 @@ function M.physicsData(scale)
                     
                     
                     {
+                    pe_fixture_id = "EggWest", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 2, maskBits = 65535, groupIndex = 2 },
+                    shape = {   -10, -3.5  ,  -7, -9.5  ,  10, 6.5  ,  6, 11.5  ,  -7, 11.5  }
+                    }
+                     ,
+                    {
+                    pe_fixture_id = "EggWest", density = 2, friction = 0, bounce = 0, 
+                    filter = { categoryBits = 2, maskBits = 65535, groupIndex = 2 },
+                    shape = {   10, -3.5  ,  10, 6.5  ,  -7, -9.5  ,  4, -11.5  }
+                    }
+                    
+                    
+                    
+		}
+		
+		, 
+		["DinoViking"] = {
+                    
+                    
+                    
+                    
+                    {
                     pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   -10, -3.5  ,  -7, -9.5  ,  10, 6.5  ,  6, 11.5  ,  -7, 11.5  }
+                    shape = {   20, -13.5  ,  -6, 27.5  ,  -25, 17.5  ,  -25, 7.5  ,  0, -25.5  }
                     }
                      ,
                     {
                     pe_fixture_id = "", density = 2, friction = 0, bounce = 0, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   10, -3.5  ,  10, 6.5  ,  -7, -9.5  ,  4, -11.5  }
+                    shape = {   -6, 27.5  ,  20, -13.5  ,  24, -17.5  ,  13, 27.5  }
                     }
                     
                     
