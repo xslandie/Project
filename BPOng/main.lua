@@ -7,6 +7,8 @@ local AI= require "AI"
 system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
 local buttonGroup = display.newGroup()
+local physics= require("physics")
+physics.start()
 
 local pass=display.contentHeight/5
 local xMin=40
@@ -107,14 +109,14 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		  if(clickedKick) then
             
 			local vx,vy= obj1:getLinearVelocity()
-			 obj1:setLinearVelocity(-(vx+500),(vy+500),obj1.x,obj1.y) end
+			 obj1:setLinearVelocity(-(vx+50000),(vy+50000),obj1.x,obj1.y) end
 			 elseif(obj1.myName =="player" and obj2.myName == "ball")then
 			 
 			 if(clickedKick)
 			 
           then
 		  local vx,vy= obj2:getLinearVelocity()
-		  obj2:setLinearVelocity(-(vx+500),(vy+500),obj2.x,obj2.y)end
+		  obj2:setLinearVelocity(-(vx+50000),(vy+50000),obj2.x,obj2.y)end
 		  
 		 
 	
@@ -123,9 +125,35 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 end
 
 end
+local background = display.newImageRect("background.png", 570, 360)
+background.x = display.contentCenterX
+background.y = display.contentCenterY
+background:scale( 1.18, 0.88)
+local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
+paddle1.x = 36
+paddle1.y = display.contentCenterY
+physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+local dragBtn = display.newRect(36,display.contentCenterY,display.contentWidth/2,display.contentHeight/2)
+dragBtn.isVisible=false
+dragBtn.isHitTestable=true
+local roof = display.newRect(display.contentCenterX, pass, display.contentWidth+88, 10, {density=2000}) 
+    local leftW= display.newRect(-44,display.contentCenterY,2,display.contentHeight)
+    local rightW= display.newRect(display.contentWidth+44,display.contentCenterY,2,display.contentHeight)
+	local f1oor = display.newRect(display.contentCenterX,display.contentHeight, display.contentWidth+88, 20)
+	leftW.isVisible= false
+	rightW.isVisible=false
+	roof.isVisible=false
+	f1oor.isVisible=false
+    roof.myName= "wall"
+	leftW.myName= "wall"
+	rightW.myName= "wall"
+	f1oor.myName= "wall"
 
+local function movePaddle(posY)
+ paddle1.y=posY
+ 
 
-
+end
 local function dragPaddle( event )
 
 	local paddle = event.target
@@ -151,7 +179,7 @@ local function dragPaddle( event )
 		paddle.y = event.y - paddle.touchOffsetY
 		if(paddle.y<yMin) then paddle.y=yMin end
 		if(paddle.y>yMax) then paddle.y=yMax end
-
+        movePaddle(paddle.y)
 	elseif ( "ended" == phase or "cancelled" == phase ) then
 
 		-- Release touch focus on the paddle
@@ -189,27 +217,12 @@ local function startFrameRateCalculator(callbackFunction)
     end)
 end
 
-local physics= require("physics")
-physics.start()
+
 --physics.setDrawMode( "hybrid" )
-local background = display.newImageRect("background.png", 570, 360)
-background.x = display.contentCenterX
-background.y = display.contentCenterY
-background:scale( 1.18, 0.88)
 
 
-	local roof = display.newRect(display.contentCenterX, pass, display.contentWidth+88, 10, {density=2000}) 
-    local leftW= display.newRect(-44,display.contentCenterY,2,display.contentHeight)
-    local rightW= display.newRect(display.contentWidth+44,display.contentCenterY,2,display.contentHeight)
-	local f1oor = display.newRect(display.contentCenterX,display.contentHeight, display.contentWidth+88, 20)
-	leftW.isVisible= false
-	rightW.isVisible=false
-	roof.isVisible=false
-	f1oor.isVisible=false
-    roof.myName= "wall"
-	leftW.myName= "wall"
-	rightW.myName= "wall"
-	f1oor.myName= "wall"
+
+	
 	
 
 
@@ -286,10 +299,6 @@ egg10:scale ( -1, 1 )
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 
-local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
-paddle1.x = 80-44
-paddle1.y = display.contentCenterY
-physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 
 
 
@@ -398,9 +407,9 @@ physics.addBody(egg10,"static")
 
 
 
-paddle1:addEventListener("touch",dragPaddle)
+dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("tap",onClick)
+kickBtn:addEventListener("touch",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
