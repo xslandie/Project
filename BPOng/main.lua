@@ -4,8 +4,9 @@
 --
 -----------------------------------------------------------------------------------------
 local AI= require "AI"
---system.activate("multitouch")
+system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
+local buttonGroup = display.newGroup()
 
 local pass=display.contentHeight/5
 local xMin=40
@@ -141,7 +142,7 @@ local function dragPaddle( event )
 		--paddle.x = event.x - paddle.touchOffsetX
 		--if(paddle.x<xMin) then paddle.x=xMin end
 		--if(paddle.x>xMax) then paddle.x=xMax end
-
+ 
 		--paddle.x = event.x - paddle.touchOffsetX
 		--if(paddle.x<xMin) then paddle.x=xMin end
 		--if(paddle.x>xMax) then paddle.x=xMax end
