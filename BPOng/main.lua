@@ -107,14 +107,14 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		  if(clickedKick) then
             
 			local vx,vy= obj1:getLinearVelocity()
-			 obj1:setLinearVelocity(-(vx+500000),(vy+500000),obj1.x,obj1.y) end
+			 obj1:setLinearVelocity(-(vx+500),(vy+500),obj1.x,obj1.y) end
 			 elseif(obj1.myName =="player" and obj2.myName == "ball")then
 			 
 			 if(clickedKick)
 			 
           then
 		  local vx,vy= obj2:getLinearVelocity()
-		  obj2:setLinearVelocity(-(vx+500000),(vy+500000),obj2.x,obj2.y)end
+		  obj2:setLinearVelocity(-(vx+500),(vy+500),obj2.x,obj2.y)end
 		  
 		 
 	
@@ -406,7 +406,7 @@ physics.addBody(egg10,"static")
 
 paddle1:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("touch",onClick)
+kickBtn:addEventListener("tap",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
