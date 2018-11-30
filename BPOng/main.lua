@@ -134,15 +134,7 @@ local function dragPaddle( event )
 	
 	
 	if ( "began" == phase ) then
-		-- Set touch focus on the paddle
-		--display.currentStage:setFocus( paddle )
-		-- Store initial offset position
 		
-
-		--paddle.touchOffsetX = event.x - paddle.x
-
-		--paddle.touchOffsetX = event.x - paddle.x
-
 		paddle.touchOffsetY = event.y - paddle.y
 
 	elseif ( "moved" == phase ) then
