@@ -10,6 +10,8 @@ local buttonGroup = display.newGroup()
 local physics= require("physics")
 physics.start()
 
+local numEgg1 = 5
+local numEgg2 = 5
 local pass=display.contentHeight/5
 local xMin=40
 local xMax=display.contentWidth/2
@@ -42,7 +44,7 @@ local function onClick(event)
 end
 
 local function onCollisions(event)
-
+	
 
 	local obj1 = event.object1
     local obj2 = event.object2
@@ -54,13 +56,25 @@ local function onCollisions(event)
 				display.remove(obj1)
 				local vx, vy = obj2:getLinearVelocity()
 				obj2:setLinearVelocity(-vx, -vy)
+				if(obj1.id == 1) then
+					numEgg1=numEgg1-1
+					print(numEgg1)
+				else numEgg2=numEgg2-1
+					print(numEgg2)
+				end
+				
+				
 		elseif (obj1.myName == "ball" and obj2.myName == "egg")
 			then
 				display.remove(obj2)
 				local vx, vy = obj1:getLinearVelocity()
 				obj1:setLinearVelocity(-vx, -vy)
-
-		
+				if(obj2.id == 1) then
+					numEgg1=numEgg1-1
+					print(numEgg1)
+				else numEgg2=numEgg2-1
+					print(numEgg2)
+				end
 				
 		elseif (obj1.myName == "ball" and obj2.myName == "enemy")
 			then
@@ -125,6 +139,8 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 end
 
 end
+
+
 local background = display.newImageRect("background.png", 570, 360)
 background.x = display.contentCenterX
 background.y = display.contentCenterY
@@ -295,6 +311,17 @@ egg8:scale( -1, 1 )
 egg9:scale( -1, 1 )
 egg10:scale ( -1, 1 )
 
+egg1.id=1
+egg2.id=1
+egg3.id=1
+egg4.id=1
+egg5.id=1
+egg6.id=2
+egg7.id=2
+egg8.id=2
+egg9.id=2
+egg10.id=2
+
 
 local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
@@ -316,7 +343,19 @@ kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
 local function onFrame(event)
-
+	
+	if(numEgg1==0 or numEgg2==0) then
+		physics.pause()
+		local endBox = native.newTextBox( display.contentCenterX, display.contentCenterY, 150, 150 )
+		endBox.isEditable = false
+		endBox.text = "Porco Dio\n è finito"
+		endBox.align = "center"
+		endBox.hasBackground = false
+		endBox.alpha = 1.0
+		endBox.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
+		endBox.size = 20	
+		end
+	
 	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
 	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
