@@ -134,8 +134,8 @@ local function dragPaddle( event )
 	
 	
 	if ( "began" == phase ) then
-		-- Set touch focus on the paddle
-		--display.currentStage:setFocus( paddle )
+		--Set touch focus on the paddle
+		display.currentStage:setFocus( paddle )
 		-- Store initial offset position
 		
 
