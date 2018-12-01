@@ -24,12 +24,23 @@ local options =
 {
     --required parameters
     width = 50,
-    height = 52.5,
+    height = 55,
     numFrames = 8,
      
     --optional parameters; used for scaled content support
     sheetContentWidth = 200,  -- width of original 1x size of entire sheet
-    sheetContentHeight = 105   -- height of original 1x size of entire sheet
+    sheetContentHeight = 110   -- height of original 1x size of entire sheet
+}
+local options2 =
+{
+    --required parameters
+    width = 50,
+    height = 55,
+    numFrames = 5,
+     
+    --optional parameters; used for scaled content support
+    sheetContentWidth = 250,  -- width of original 1x size of entire sheet
+    sheetContentHeight = 55   -- height of original 1x size of entire sheet
 }
 local sequences_sprites = {
     -- first sequence (consecutive frames)
@@ -43,23 +54,68 @@ local sequences_sprites = {
     -- next sequence (non-consecutive frames)
     {
         name = "fastRun",
-        frames = { 1,3,5,7 },
-        time = 400,
+        start = 1,
+		count = 5,
+        time = 500,
         loopCount = 0
     },
 }
+local sequences_sprites2 = {
+    -- first sequence (consecutive frames)
+    {
+        name = "normalRun",
+        start = 1,
+        count = 5,
+        time = 500,
+        loopCount = 0
+    }
+}
+
+local background = display.newImageRect("background.png", 570, 360)
+background.x = display.contentCenterX
+background.y = display.contentCenterY
+background:scale( 1.18, 0.88)
+
+
+local sprite= graphics.newImageSheet("DinoViking2.png", options)
+local spriteHeader = graphics.newImageSheet("DinoVikingHeader.png", options2)
+
+local paddle1= display.newSprite(sprite, sequences_sprites)
+paddle1:play()
+paddle1.x = 36
+paddle1.y = display.contentCenterY
+physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 
 local function clickFalse()
-   clickedKick = false
- 
+   
+	if(clickedKick==true)then
+		display.remove(paddle1)
+		paddle1 = display.newSprite(sprite, sequences_sprites)
+		paddle1:setSequence("normalRun")
+		paddle1:play()
+		paddle1.x = 36
+		paddle1.y = display.contentCenterY
+		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+	end
 	
+	clickedKick = false
 end
 
 local function onClick(event)
         print (" tapped!")
 		
-	    clickedKick = true 
+		if(clickedKick==false)then
+			display.remove(paddle1)
+			paddle1 = display.newSprite(spriteHeader, sequences_sprites)
+			paddle1:setSequence("fastRun")
+			paddle1:play()
+			paddle1.x = 36
+			paddle1.y = display.contentCenterY
+			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+		end
 		timer.performWithDelay(500, clickFalse)
+	    clickedKick = true 
+		
 		
 		if event.phase == "began" then
         display.getCurrentStage():setFocus( event.target, event.id )
@@ -171,14 +227,8 @@ end
 end
 
 
-local background = display.newImageRect("background.png", 570, 360)
-background.x = display.contentCenterX
-background.y = display.contentCenterY
-background:scale( 1.18, 0.88)
-local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
-paddle1.x = 36
-paddle1.y = display.contentCenterY
-physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+--local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
+
 local dragBtn = display.newRect(36,display.contentCenterY,display.contentWidth/2,display.contentHeight/2)
 dragBtn.isVisible=false
 dragBtn.isHitTestable=true
@@ -363,6 +413,7 @@ local sceneGroup = display.newGroup( );
 
 --local paddle2= display.newImageRect("DinoViking.png", 50, 55)
 local sprite= graphics.newImageSheet("DinoViking2.png", options)
+
 local paddle2 = display.newSprite(sprite, sequences_sprites)
 paddle2:play()
 paddle2.x=display.contentWidth-80+44
@@ -381,11 +432,11 @@ local function onFrame(event)
 		physics.pause()
 		local endBox = native.newTextBox( display.contentCenterX, display.contentCenterY, 150, 150 )
 		endBox.isEditable = false
-		endBox.text = "Porco Dio\n è finito"
+		endBox.text = "\n è finito"
 		endBox.align = "center"
 		--endBox.hasBackground = false
 		--endBox.alpha = 1.0
-		endBox.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
+		endBox.isFontSizeScaled = true 
 		endBox.size = 20	
 		end
 	
