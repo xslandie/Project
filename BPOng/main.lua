@@ -19,6 +19,36 @@ local yMin=pass+25
 local yMax=display.contentHeight-21
 local clickedKick=false
 
+--Sprites options
+local options =
+{
+    --required parameters
+    width = 50,
+    height = 52.5,
+    numFrames = 8,
+     
+    --optional parameters; used for scaled content support
+    sheetContentWidth = 200,  -- width of original 1x size of entire sheet
+    sheetContentHeight = 105   -- height of original 1x size of entire sheet
+}
+local sequences_sprites = {
+    -- first sequence (consecutive frames)
+    {
+        name = "normalRun",
+        start = 1,
+        count = 8,
+        time = 800,
+        loopCount = 0
+    },
+    -- next sequence (non-consecutive frames)
+    {
+        name = "fastRun",
+        frames = { 1,3,5,7 },
+        time = 400,
+        loopCount = 0
+    },
+}
+
 local function clickFalse()
    clickedKick = false
  
@@ -331,7 +361,10 @@ local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 local sceneGroup = display.newGroup( );
 
-local paddle2= display.newImageRect("DinoViking.png", 50, 55)
+--local paddle2= display.newImageRect("DinoViking.png", 50, 55)
+local sprite= graphics.newImageSheet("DinoViking2.png", options)
+local paddle2 = display.newSprite(sprite, sequences_sprites)
+paddle2:play()
 paddle2.x=display.contentWidth-80+44
 paddle2.y=display.contentCenterY
 physics.addBody( paddle2, "static", physicsData:get("DinoViking") )
@@ -350,8 +383,8 @@ local function onFrame(event)
 		endBox.isEditable = false
 		endBox.text = "Porco Dio\n è finito"
 		endBox.align = "center"
-		endBox.hasBackground = false
-		endBox.alpha = 1.0
+		--endBox.hasBackground = false
+		--endBox.alpha = 1.0
 		endBox.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
 		endBox.size = 20	
 		end
