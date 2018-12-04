@@ -89,12 +89,13 @@ physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 local function clickFalse()
    
 	if(clickedKick==true)then
+		local x, y = paddle1.x, paddle1.y
 		display.remove(paddle1)
 		paddle1 = display.newSprite(sprite, sequences_sprites)
 		paddle1:setSequence("normalRun")
 		paddle1:play()
-		paddle1.x = 36
-		paddle1.y = display.contentCenterY
+		paddle1.x = x
+		paddle1.y = y
 		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 	end
 	
@@ -105,12 +106,13 @@ local function onClick(event)
         print (" tapped!")
 		
 		if(clickedKick==false)then
+			local x, y = paddle1.x, paddle1.y
 			display.remove(paddle1)
 			paddle1 = display.newSprite(spriteHeader, sequences_sprites)
 			paddle1:setSequence("fastRun")
 			paddle1:play()
-			paddle1.x = 36
-			paddle1.y = display.contentCenterY
+			paddle1.x = x
+			paddle1.y = y
 			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 		end
 		timer.performWithDelay(500, clickFalse)
