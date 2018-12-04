@@ -21,8 +21,6 @@ local clickedKick=false
 
 local function clickFalse()
    clickedKick = false
- 
-	
 end
 
 local function onClick(event)
@@ -448,7 +446,7 @@ physics.addBody(egg10,"static")
 
 dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("touch",onClick)
+kickBtn:addEventListener("tap",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
