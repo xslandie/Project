@@ -18,6 +18,7 @@ local xMax=display.contentWidth/2
 local yMin=pass+25
 local yMax=display.contentHeight-21
 local clickedKick=false
+local vmaxX, vmaxY = 500 , 500 
 
 --Sprites options
 local options =
@@ -43,6 +44,7 @@ local options2 =
     sheetContentHeight = 55   -- height of original 1x size of entire sheet
 }
 local sequences_sprites = {
+
     -- first sequence (consecutive frames)
     {
         name = "normalRun",
@@ -50,15 +52,8 @@ local sequences_sprites = {
         count = 8,
         time = 800,
         loopCount = 0
-    },
-    -- next sequence (non-consecutive frames)
-    {
-        name = "fastRun",
-        start = 1,
-		count = 5,
-        time = 500,
-        loopCount = 0
-    },
+    }
+   
 }
 local sequences_sprites2 = {
     -- first sequence (consecutive frames)
@@ -92,7 +87,7 @@ local function clickFalse()
 		local x, y = paddle1.x, paddle1.y
 		display.remove(paddle1)
 		paddle1 = display.newSprite(sprite, sequences_sprites)
-		paddle1:setSequence("normalRun")
+		
 		paddle1:play()
 		paddle1.x = x
 		paddle1.y = y
@@ -108,8 +103,8 @@ local function onClick(event)
 		if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
 			display.remove(paddle1)
-			paddle1 = display.newSprite(spriteHeader, sequences_sprites)
-			paddle1:setSequence("fastRun")
+			paddle1 = display.newSprite(spriteHeader, sequences_sprites2)
+			
 			paddle1:play()
 			paddle1.x = x
 			paddle1.y = y
@@ -316,7 +311,7 @@ local function startFrameRateCalculator(callbackFunction)
 end
 
 
---physics.setDrawMode( "hybrid" )
+physics.setDrawMode( "hybrid" )
 
 
 
@@ -438,7 +433,11 @@ kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
 local function onFrame(event)
-	
+	local vx, vy = ball:getLinearVelocity()
+	if( math.abs(vx)>vmaxX and math.abs(vy)>vmaxY)then
+		ball:setLinearVelocity(vx/math.abs(vx)*vmaxX, vy/math.abs(vy)*vmaxY)
+		
+	end
 	
 	
 	if(numEgg1==0 or numEgg2==0) then
@@ -456,7 +455,7 @@ local function onFrame(event)
 	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
 	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
-	local vx, vy = ball:getLinearVelocity()
+	
 	if (math.abs(vx)<100 and math.abs(vy)<100)
 	then ball:setLinearVelocity(100,100)end
 	ball:setLinearVelocity(vx*2/1.9999,vy*2/1.9999)
