@@ -287,7 +287,7 @@ end
 display.setStatusBar( display.HiddenStatusBar)
 
 
-physics.setDrawMode( "hybrid" )
+--physics.setDrawMode( "hybrid" )
 
 
 math.randomseed( os.time() )
@@ -385,7 +385,6 @@ local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 local sceneGroup = display.newGroup( );
 
---local paddle2= display.newImageRect("DinoViking.png", 50, 55)
 local sprite= graphics.newImageSheet("DinoViking2.png", options)
 
 local paddle2 = display.newSprite(sprite, sequences_sprites)
@@ -411,7 +410,7 @@ local function onFrame(event)
 		physics.pause()
 		local endBox = native.newTextBox( display.contentCenterX, display.contentCenterY, 150, 150 )
 		endBox.isEditable = false
-		endBox.text = "\n è finito"
+		endBox.text = "\n è finito \nPORCO DIO"
 		endBox.align = "center"
 		--endBox.hasBackground = false
 		--endBox.alpha = 1.0
