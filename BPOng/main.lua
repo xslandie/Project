@@ -82,6 +82,8 @@ paddle1.y = display.contentCenterY
 physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 
 local function clickFalse()
+
+  
    
 	if(clickedKick==true)then
 		local x, y = paddle1.x, paddle1.y
@@ -95,6 +97,7 @@ local function clickFalse()
 	end
 	
 	clickedKick = false
+
 end
 
 local function onClick(event)
@@ -544,7 +547,7 @@ physics.addBody(egg10,"static")
 
 dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("touch",onClick)
+kickBtn:addEventListener("tap",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
