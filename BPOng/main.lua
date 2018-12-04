@@ -19,15 +19,108 @@ local yMin=pass+25
 local yMax=display.contentHeight-21
 local clickedKick=false
 
+--Sprites options
+local options =
+{
+    --required parameters
+    width = 50,
+    height = 55,
+    numFrames = 8,
+     
+    --optional parameters; used for scaled content support
+    sheetContentWidth = 200,  -- width of original 1x size of entire sheet
+    sheetContentHeight = 110   -- height of original 1x size of entire sheet
+}
+local options2 =
+{
+    --required parameters
+    width = 50,
+    height = 55,
+    numFrames = 5,
+     
+    --optional parameters; used for scaled content support
+    sheetContentWidth = 250,  -- width of original 1x size of entire sheet
+    sheetContentHeight = 55   -- height of original 1x size of entire sheet
+}
+local sequences_sprites = {
+    -- first sequence (consecutive frames)
+    {
+        name = "normalRun",
+        start = 1,
+        count = 8,
+        time = 800,
+        loopCount = 0
+    },
+    -- next sequence (non-consecutive frames)
+    {
+        name = "fastRun",
+        start = 1,
+		count = 5,
+        time = 500,
+        loopCount = 0
+    },
+}
+local sequences_sprites2 = {
+    -- first sequence (consecutive frames)
+    {
+        name = "normalRun",
+        start = 1,
+        count = 5,
+        time = 500,
+        loopCount = 0
+    }
+}
+
+local background = display.newImageRect("background.png", 570, 360)
+background.x = display.contentCenterX
+background.y = display.contentCenterY
+background:scale( 1.18, 0.88)
+
+
+local sprite= graphics.newImageSheet("DinoViking2.png", options)
+local spriteHeader = graphics.newImageSheet("DinoVikingHeader.png", options2)
+
+local paddle1= display.newSprite(sprite, sequences_sprites)
+paddle1:play()
+paddle1.x = 36
+paddle1.y = display.contentCenterY
+physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+
 local function clickFalse()
-   clickedKick = false
+
+  
+   
+	if(clickedKick==true)then
+		local x, y = paddle1.x, paddle1.y
+		display.remove(paddle1)
+		paddle1 = display.newSprite(sprite, sequences_sprites)
+		paddle1:setSequence("normalRun")
+		paddle1:play()
+		paddle1.x = x
+		paddle1.y = y
+		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+	end
+	
+	clickedKick = false
+
 end
 
 local function onClick(event)
         print (" tapped!")
 		
-	    clickedKick = true 
+		if(clickedKick==false)then
+			local x, y = paddle1.x, paddle1.y
+			display.remove(paddle1)
+			paddle1 = display.newSprite(spriteHeader, sequences_sprites)
+			paddle1:setSequence("fastRun")
+			paddle1:play()
+			paddle1.x = x
+			paddle1.y = y
+			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+		end
 		timer.performWithDelay(500, clickFalse)
+	    clickedKick = true 
+		
 		
 		if event.phase == "began" then
         display.getCurrentStage():setFocus( event.target, event.id )
@@ -139,14 +232,8 @@ end
 end
 
 
-local background = display.newImageRect("background.png", 570, 360)
-background.x = display.contentCenterX
-background.y = display.contentCenterY
-background:scale( 1.18, 0.88)
-local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
-paddle1.x = 36
-paddle1.y = display.contentCenterY
-physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+--local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
+
 local dragBtn = display.newRect(36,display.contentCenterY,display.contentWidth/2,display.contentHeight/2)
 dragBtn.isVisible=false
 dragBtn.isHitTestable=true
@@ -253,9 +340,18 @@ local fpsLabel = display.newText({
 })
 fpsLabel:setFillColor(1,1,0)
 
+local timeLabel = display.newText({
+	x=50,
+	y=35,
+	fontSize= 10,
+	font = native.systemFontBold,
+	text = "Time: " .. math.round(system.getTimer()/1000)
+	})
+timeLabel:setFillColor(1,1,0)
 -- Start calculating FPS, and provide a callback function to update the label with current FPS value
 startFrameRateCalculator(function(fps) 
     fpsLabel.text = "FPS: " .. math.round(fps)
+	timeLabel.text = "Time: " .. math.round(system.getTimer()/1000)
 end)
 
 
@@ -329,7 +425,11 @@ local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 local sceneGroup = display.newGroup( );
 
-local paddle2= display.newImageRect("DinoViking.png", 50, 55)
+--local paddle2= display.newImageRect("DinoViking.png", 50, 55)
+local sprite= graphics.newImageSheet("DinoViking2.png", options)
+
+local paddle2 = display.newSprite(sprite, sequences_sprites)
+paddle2:play()
 paddle2.x=display.contentWidth-80+44
 paddle2.y=display.contentCenterY
 physics.addBody( paddle2, "static", physicsData:get("DinoViking") )
@@ -342,15 +442,17 @@ kickBtn.isHitTestable= true
 
 local function onFrame(event)
 	
+	
+	
 	if(numEgg1==0 or numEgg2==0) then
 		physics.pause()
 		local endBox = native.newTextBox( display.contentCenterX, display.contentCenterY, 150, 150 )
 		endBox.isEditable = false
-		endBox.text = "Porco Dio\n è finito"
+		endBox.text = "\n è finito"
 		endBox.align = "center"
-		endBox.hasBackground = false
-		endBox.alpha = 1.0
-		endBox.isFontSizeScaled = true  -- Make the text box use the same font units as the text object
+		--endBox.hasBackground = false
+		--endBox.alpha = 1.0
+		endBox.isFontSizeScaled = true 
 		endBox.size = 20	
 		end
 	
