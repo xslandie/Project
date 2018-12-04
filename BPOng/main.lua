@@ -335,9 +335,18 @@ local fpsLabel = display.newText({
 })
 fpsLabel:setFillColor(1,1,0)
 
+local timeLabel = display.newText({
+	x=50,
+	y=35,
+	fontSize= 10,
+	font = native.systemFontBold,
+	text = "Time: " .. math.round(system.getTimer()/1000)
+	})
+timeLabel:setFillColor(1,1,0)
 -- Start calculating FPS, and provide a callback function to update the label with current FPS value
 startFrameRateCalculator(function(fps) 
     fpsLabel.text = "FPS: " .. math.round(fps)
+	timeLabel.text = "Time: " .. math.round(system.getTimer()/1000)
 end)
 
 
@@ -427,6 +436,8 @@ kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
 local function onFrame(event)
+	
+	
 	
 	if(numEgg1==0 or numEgg2==0) then
 		physics.pause()
