@@ -85,7 +85,7 @@ local function clickFalse()
 
   
    
-	if(clickedKick==true)then
+	--[[if(clickedKick==true)then
 		local x, y = paddle1.x, paddle1.y
 		display.remove(paddle1)
 		paddle1 = display.newSprite(sprite, sequences_sprites)
@@ -94,7 +94,7 @@ local function clickFalse()
 		paddle1.x = x
 		paddle1.y = y
 		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-	end
+	end]]--
 	
 	clickedKick = false
 
@@ -103,7 +103,7 @@ end
 local function onClick(event)
         print (" tapped!")
 		
-		if(clickedKick==false)then
+		--[[if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
 			display.remove(paddle1)
 			paddle1 = display.newSprite(spriteHeader, sequences_sprites2)
@@ -112,20 +112,18 @@ local function onClick(event)
 			paddle1.x = x
 			paddle1.y = y
 			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-		end
+		end]]--
+		
+		clickedKick = true
 		timer.performWithDelay(500, clickFalse)
-	    clickedKick = true 
-		
-		
+	     	
 		if event.phase == "began" then
         display.getCurrentStage():setFocus( event.target, event.id )
         --other code
 		end
 		if event.phase == "ended" or event.phase == "cancelled" then
         display.getCurrentStage():setFocus( event.target, nil )
-		end
-		
-	     
+		end     
      
 end
 
@@ -186,7 +184,7 @@ local function onCollisions(event)
 	       then obj2.y=yMin
             elseif(obj2.y>yMax) 
 			then obj2.y=yMax end	
-elseif(obj1.myName == "ball" and obj2.myName =="wall" )
+		elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		   then 
 		   local vx, vy = obj1:getLinearVelocity()
 				obj1:setLinearVelocity(vx, -vy)
@@ -204,20 +202,18 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 	       then transition.moveTo(obj2,{x=obj2.x,y=yMin,time=0})
             elseif(obj2.y>yMax) 
 			then transition.moveTo(obj2,{x=obj2.x,y=yMax,time=0}) end		
-         elseif(obj1.myName =="ball" and obj2.myName == "player")
-          then
-		  if(clickedKick) then
-            
-			local vx,vy= obj1:getLinearVelocity()
-			 obj1:setLinearVelocity(-(vx+50000),(vy+50000),obj1.x,obj1.y) end
-			 elseif(obj1.myName =="player" and obj2.myName == "ball")then
-			 
-			 if(clickedKick)
-			 
-          then
-		  local vx,vy= obj2:getLinearVelocity()
-		  obj2:setLinearVelocity(-(vx+50000),(vy+50000),obj2.x,obj2.y)end
-		  
+         
+		 
+			if(obj1.myName =="ball" and obj2.myName == "player")then
+				if(clickedKick) then  
+					local vx,vy= obj1:getLinearVelocity()
+					obj1:setLinearVelocity(-(vx+50000),(vy+50000),obj1.x,obj1.y) end
+			end
+			if(obj1.myName =="player" and obj2.myName == "ball")then
+				if(clickedKick)then
+					local vx,vy= obj2:getLinearVelocity()
+					obj2:setLinearVelocity(-(vx+50000),(vy+50000),obj2.x,obj2.y)end
+			end
 		 
 	
 	   
@@ -226,8 +222,6 @@ end
 
 end
 
-
---local paddle1=display.newImageRect( "DinoKnight2.png", 50, 55)
 
 local dragBtn = display.newRect(36,display.contentCenterY,display.contentWidth/2,display.contentHeight/2)
 dragBtn.isVisible=false
@@ -288,38 +282,8 @@ end
 --variables+basic graphics
 display.setStatusBar( display.HiddenStatusBar)
 
-local function startFrameRateCalculator(callbackFunction)
-    
-    local lastTimestampMs
-    local frameCounter = 0
-    
-    Runtime:addEventListener("enterFrame", function()
-            
-        frameCounter = frameCounter + 1
-        local currentTimestampMs = system.getTimer()
-            
-        if (not lastTimestampMs) then
-            lastTimestampMs = currentTimestampMs
-        end
-        
-        -- Calculate actual fps approximately four times every second
-        if (frameCounter >= (display.fps / 4)) then
-            local deltaMs = currentTimestampMs - lastTimestampMs            
-            local fps = frameCounter / (deltaMs / 1000) 
-            frameCounter = 0
-            lastTimestampMs = currentTimestampMs
-            callbackFunction(fps)
-        end
-    end)
-end
-
 
 physics.setDrawMode( "hybrid" )
-
-
-
-	
-	
 
 
 math.randomseed( os.time() )
@@ -343,11 +307,6 @@ local timeLabel = display.newText({
 	text = "Time: " .. math.round(system.getTimer()/1000)
 	})
 timeLabel:setFillColor(1,1,0)
--- Start calculating FPS, and provide a callback function to update the label with current FPS value
-startFrameRateCalculator(function(fps) 
-    fpsLabel.text = "FPS: " .. math.round(fps)
-	timeLabel.text = "Time: " .. math.round(system.getTimer()/1000)
-end)
 
 
 
@@ -437,10 +396,10 @@ kickBtn.isHitTestable= true
 
 local function onFrame(event)
 	local vx, vy = ball:getLinearVelocity()
-	if( math.abs(vx)>vmaxX and math.abs(vy)>vmaxY)then
-		ball:setLinearVelocity(vx/math.abs(vx)*vmaxX, vy/math.abs(vy)*vmaxY)
+	--if( math.abs(vx)>vmaxX and math.abs(vy)>vmaxY)then
+	--	ball:setLinearVelocity(vx/math.abs(vx)*vmaxX, vy/math.abs(vy)*vmaxY)
 		
-	end
+	--end
 	
 	
 	if(numEgg1==0 or numEgg2==0) then
@@ -543,7 +502,45 @@ physics.addBody(egg9,"static")
 physics.addBody(egg10,"static")
 
 
+local function startFrameRateCalculator(callbackFunction)
+    
+    local lastTimestampMs
+    local frameCounter = 0
+    local vx, vy = ball:getLinearVelocity()
+	local speedLabel = display.newText({
+	x=200,
+	y=20,
+	fontSize=10,
+	font=native.systemFontBold,
+	text= "velocity= " .. math.round(math.sqrt(vx^2+vy^2)) .. "\n vx= " .. math.round(vx) .. "  vy= " .. math.round(vy)
+	})
+    Runtime:addEventListener("enterFrame", function()
+        local vx, vy = ball:getLinearVelocity()
+		speedLabel.text = "velocity= " .. math.round(math.sqrt(vx^2+vy^2)) .. "\n vx= " .. math.round(vx) .. "  vy= " .. math.round(vy)
+		
+        frameCounter = frameCounter + 1
+        local currentTimestampMs = system.getTimer()
+            
+        if (not lastTimestampMs) then
+            lastTimestampMs = currentTimestampMs
+        end
+        
+        -- Calculate actual fps approximately four times every second
+        if (frameCounter >= (display.fps / 4)) then
+            local deltaMs = currentTimestampMs - lastTimestampMs            
+            local fps = frameCounter / (deltaMs / 1000) 
+            frameCounter = 0
+            lastTimestampMs = currentTimestampMs
+            callbackFunction(fps)
+        end
+    end)
+end
 
+-- Start calculating FPS, and provide a callback function to update the label with current FPS value
+startFrameRateCalculator(function(fps) 
+    fpsLabel.text = "FPS: " .. math.round(fps)
+	timeLabel.text = "Time: " .. math.round(system.getTimer()/1000)
+end)
 
 dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
