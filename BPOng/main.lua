@@ -85,16 +85,16 @@ local function clickFalse()
 
   
    
-	if(clickedKick==true)then
-		local x, y = paddle1.x, paddle1.y
-		display.remove(paddle1)
-		paddle1 = display.newSprite(sprite, sequences_sprites)
+	--if(clickedKick==true)then
+		--local x, y = paddle1.x, paddle1.y
+		--display.remove(paddle1)
+		--paddle1 = display.newSprite(sprite, sequences_sprites)
 		
-		paddle1:play()
-		paddle1.x = x
-		paddle1.y = y
-		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-	end
+		--paddle1:play()
+		--paddle1.x = x
+		--paddle1.y = y
+		--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+	--end
 	
 	clickedKick = false
 
@@ -103,18 +103,19 @@ end
 local function onClick(event)
         print (" tapped!")
 		
-		if(clickedKick==false)then
-			local x, y = paddle1.x, paddle1.y
-			display.remove(paddle1)
-			paddle1 = display.newSprite(spriteHeader, sequences_sprites2)
+		--if(clickedKick==false)then
+			--local x, y = paddle1.x, paddle1.y
+			--display.remove(paddle1)
+			--paddle1 = display.newSprite(spriteHeader, sequences_sprites2)
 			
-			paddle1:play()
-			paddle1.x = x
-			paddle1.y = y
-			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-		end
+			--paddle1:play()
+			--paddle1.x = x
+			--paddle1.y = y
+			--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+		--end
+		clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
-	    clickedKick = true 
+	    
 		
 		
 		if event.phase == "began" then
