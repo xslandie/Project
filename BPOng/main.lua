@@ -26,21 +26,21 @@ local options =
     --required parameters
     width = 50,
     height = 55,
-    numFrames = 8,
+    numFrames = 12,
      
     --optional parameters; used for scaled content support
     sheetContentWidth = 200,  -- width of original 1x size of entire sheet
-    sheetContentHeight = 110   -- height of original 1x size of entire sheet
+    sheetContentHeight = 165   -- height of original 1x size of entire sheet
 }
 local options2 =
 {
     --required parameters
     width = 50,
     height = 55,
-    numFrames = 5,
+    numFrames = 4,
      
     --optional parameters; used for scaled content support
-    sheetContentWidth = 250,  -- width of original 1x size of entire sheet
+    sheetContentWidth = 200,  -- width of original 1x size of entire sheet
     sheetContentHeight = 55   -- height of original 1x size of entire sheet
 }
 local sequences_sprites = {
@@ -51,8 +51,18 @@ local sequences_sprites = {
         start = 1,
         count = 8,
         time = 800,
-        loopCount = 0
-    }
+        loopCount = 0,
+		loopDirection = "backward"
+    },
+	-- second sequence (consecutive frames)
+    {
+        name = "jump",
+        frames = { 9,10,11,12 },
+        time = 500,
+        loopCount = 1,
+		loopDirection = "forward"
+    },
+	
    
 }
 local sequences_sprites2 = {
@@ -60,26 +70,27 @@ local sequences_sprites2 = {
     {
         name = "normalRun",
         start = 1,
-        count = 5,
+        count = 4,
         time = 500,
         loopCount = 0
     }
 }
 
-local background = display.newImageRect("background.png", 570, 360)
+local background = display.newImageRect("background2.jpg", 570, 360)
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 background:scale( 1.18, 0.88)
 
 
-local sprite= graphics.newImageSheet("DinoViking2.png", options)
-local spriteHeader = graphics.newImageSheet("DinoVikingHeader.png", options2)
+local sprite= graphics.newImageSheet("DinoViking3.png", options)
+local spriteHeader = graphics.newImageSheet("DinoViking3.png", options)
 
-local paddle1= display.newSprite(sprite, sequences_sprites)
+local paddle1 = display.newSprite(sprite, sequences_sprites)	
 paddle1:play()
 paddle1.x = 36
 paddle1.y = display.contentCenterY
 physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+--paddle1:scale( -1, 1)
 
 local function clickFalse()
 	
@@ -87,11 +98,13 @@ local function clickFalse()
 		local x, y = paddle1.x, paddle1.y
 		display.remove(paddle1)
 		paddle1 = display.newSprite(sprite, sequences_sprites)
+		paddle1:setSequence("normalRun")
 		paddle1.myName="player"
 		paddle1:play()
 		paddle1.x = x
 		paddle1.y = y
 		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+		--paddle1:scale( -1, 1)
 	end
 	
 	clickedKick = false
@@ -104,12 +117,14 @@ local function onClick(event)
 		if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
 			display.remove(paddle1)
-			paddle1 = display.newSprite(spriteHeader, sequences_sprites2)
+			paddle1 = display.newSprite(sprite, sequences_sprites)
+			paddle1:setSequence("jump")
 			paddle1.myName="player"
 			paddle1:play()
 			paddle1.x = x
 			paddle1.y = y
 			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
+			--paddle1:scale( -1, 1)
 		end
 		clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
@@ -385,9 +400,9 @@ local ball= display.newCircle(display.contentCenterX,display.contentCenterY,5)
 
 local sceneGroup = display.newGroup( );
 
-local sprite= graphics.newImageSheet("DinoViking2.png", options)
+local sprite2= graphics.newImageSheet("DinoWest3.png", options)
 
-local paddle2 = display.newSprite(sprite, sequences_sprites)
+local paddle2 = display.newSprite(sprite2, sequences_sprites)
 paddle2:play()
 paddle2.x=display.contentWidth-80+44
 paddle2.y=display.contentCenterY
