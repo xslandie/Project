@@ -9,6 +9,26 @@ local physicsData = (require "shapedefs").physicsData(1)
 local buttonGroup = display.newGroup()
 local physics= require("physics")
 physics.start()
+local function vectorLength(vx,vy)
+ return math.sqrt(vx^2+vy^2)
+ end
+local function findAngle(vx,vy)
+local angle= math.atan( vectorLength(vx,vy)/vy)
+if( vx<0 and vy>0) then angle =angle+ math.pi/2
+
+elseif(vx<0 and vy<0) then angle =angle +math.pi
+elseif(vx>0 and vy<0) then angle =angle+ math.pi*1.5 end 
+
+return angle
+
+
+end
+local function vectorProj(length,angle)
+local uX,uY
+uX=length *math.cos(angle)
+uY=length * math.sin(angle)
+return uX,uY
+end
 
 local numEgg1 = 5
 local numEgg2 = 5
@@ -18,7 +38,7 @@ local xMax=display.contentWidth/2
 local yMin=pass+25
 local yMax=display.contentHeight-21
 local clickedKick=false
-local vmaxX, vmaxY = 100 , 100 
+local vmax   = 900 
 
 --Sprites options
 local options =
@@ -120,7 +140,7 @@ local function onClick(event)
 			paddle1 = display.newSprite(sprite, sequences_sprites)
 			paddle1:setSequence("jump")
 			paddle1.myName="player"
-			paddle1:play()
+			paddle1:play() 
 			paddle1.x = x
 			paddle1.y = y
 			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
@@ -178,6 +198,7 @@ local function onCollisions(event)
 		elseif (obj1.myName == "ball" and obj2.myName == "enemy")
 			then
 				local vx, vy = obj1:getLinearVelocity()
+
 				obj1:setLinearVelocity(-vx-2, vy)
 				--obj1:applyLinearImpulse( 0.01, 0.01, obj1.x, obj1.y )
 				
@@ -222,14 +243,31 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		  if(clickedKick) then
             
 			local vx,vy= obj1:getLinearVelocity()
-			 obj1:setLinearVelocity(-(vx+50000),(vy+50000),obj1.x,obj1.y) end
+			local angle=findAngle(vx,vy)
+			local length=vectorLength(vx,vy)
+			length = length+1000
+			
+	if( length>vmax)then
+	     length=vmax
+		
+	end
+			local vx1,vy1=vectorProj(length,angle)
+			 obj1:setLinearVelocity(-vx1,vy1,obj1.x,obj1.y) end
 			 elseif(obj1.myName =="player" and obj2.myName == "ball")then
 			 
 			 if(clickedKick)
 			 
           then
 		  local vx,vy= obj2:getLinearVelocity()
-		  obj2:setLinearVelocity(-(vx+50000),(vy+50000),obj2.x,obj2.y)end
+		 local angle=findAngle(vx,vy)
+			local length=vectorLength(vx,vy)
+			length =length+1000
+			if( length>vmax)then
+	     length=vmax
+		
+	end
+			local vx1,vy1=vectorProj(length,angle)
+			 obj2:setLinearVelocity(-vx1,vy1,obj1.x,obj1.y) end
 		  
 		 
 	
@@ -302,7 +340,7 @@ end
 display.setStatusBar( display.HiddenStatusBar)
 
 
---physics.setDrawMode( "hybrid" )
+physics.setDrawMode( "hybrid" )
 
 
 math.randomseed( os.time() )
@@ -415,10 +453,7 @@ kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
 local function onFrame(event)
-	local vx, vy = ball:getLinearVelocity()
-	if( math.abs(vx)>vmaxX and math.abs(vy)>vmaxY)then
-		ball:setLinearVelocity(vx/math.abs(vx)*vmaxX, vy/math.abs(vy)*vmaxY)
-	end
+	
 	
 	
 	if(numEgg1==0 or numEgg2==0) then
@@ -437,9 +472,8 @@ local function onFrame(event)
 	
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
 	
-	if (math.abs(vx)<100 and math.abs(vy)<100)
-	then ball:setLinearVelocity(100,100)end
-	ball:setLinearVelocity(vx*2/1.9999,vy*2/1.9999)
+	
+	
 	
 	if(paddle2.y<yMin-21)
 	then paddle2.y=yMin
