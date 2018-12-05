@@ -4,6 +4,8 @@
 --
 -----------------------------------------------------------------------------------------
 local AI= require "AI"
+local widget = require( "widget" )
+widget.setTheme( "widget_theme_ios7" )
 system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
 local buttonGroup = display.newGroup()
@@ -37,11 +39,11 @@ local options2 =
     --required parameters
     width = 50,
     height = 55,
-    numFrames = 4,
+    numFrames = 12,
      
     --optional parameters; used for scaled content support
     sheetContentWidth = 200,  -- width of original 1x size of entire sheet
-    sheetContentHeight = 55   -- height of original 1x size of entire sheet
+    sheetContentHeight = 172   -- height of original 1x size of entire sheet
 }
 local sequences_sprites = {
 
@@ -52,7 +54,7 @@ local sequences_sprites = {
         count = 8,
         time = 800,
         loopCount = 0,
-		loopDirection = "backward"
+		loopDirection = "forward"
     },
 	-- second sequence (consecutive frames)
     {
@@ -70,20 +72,21 @@ local sequences_sprites2 = {
     {
         name = "normalRun",
         start = 1,
-        count = 4,
+        count = 8,
         time = 500,
         loopCount = 0
     }
+	
 }
 
-local background = display.newImageRect("background2.jpg", 570, 360)
+local background = display.newImageRect("background.png", 570, 360)
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 background:scale( 1.18, 0.88)
 
 
-local sprite= graphics.newImageSheet("DinoViking3.png", options)
-local spriteHeader = graphics.newImageSheet("DinoViking3.png", options)
+local sprite= graphics.newImageSheet("DinoKnight2.png", options)
+local spriteHeader = graphics.newImageSheet("DinoKnightHeader.png", options)
 
 local paddle1 = display.newSprite(sprite, sequences_sprites)	
 paddle1:play()
@@ -414,6 +417,7 @@ local kickBtn=display.newRect(display.contentCenterX*1.5+22,display.contentCente
 kickBtn.alpha = 0
 kickBtn.isHitTestable= true
 
+
 local function onFrame(event)
 	local vx, vy = ball:getLinearVelocity()
 	if( math.abs(vx)>vmaxX and math.abs(vy)>vmaxY)then
@@ -423,14 +427,14 @@ local function onFrame(event)
 	
 	if(numEgg1==0 or numEgg2==0) then
 		physics.pause()
-		local endBox = native.newTextBox( display.contentCenterX, display.contentCenterY, 150, 150 )
-		endBox.isEditable = false
-		endBox.text = "\n è finito \nPORCO DIO"
-		endBox.align = "center"
-		--endBox.hasBackground = false
-		--endBox.alpha = 1.0
-		endBox.isFontSizeScaled = true 
-		endBox.size = 20	
+		local ending = display.newText({
+	x=display.contentCenterX,
+	y=display.contentCenterY,
+	fontSize=20,
+	font=native.systemFontBold,
+	text= "~ E' finito ~\n~ porco dio! ~"
+	})
+	
 		end
 	
 	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
@@ -541,7 +545,7 @@ local function startFrameRateCalculator(callbackFunction)
             
         if (not lastTimestampMs) then
             lastTimestampMs = currentTimestampMs
-        end
+        end	
         
         -- Calculate actual fps approximately four times every second
         if (frameCounter >= (display.fps / 4)) then
