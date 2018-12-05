@@ -3,12 +3,14 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
-local AI= require "AI"
+
 system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
 local buttonGroup = display.newGroup()
 local physics= require("physics")
 physics.start()
+
+local AiTriggered=false
 local function vectorLength(vx,vy)
  return math.sqrt(vx^2+vy^2)
  end
@@ -28,6 +30,32 @@ local uX,uY
 uX=length *math.cos(angle)
 uY=length * math.sin(angle)
 return uX,uY
+end
+local function AiTarget(vx,vy,x,y)
+local posY
+
+local angle=findAngle(vx,vy)
+if(vy<0 and vx>0) then angle=angle-math.pi*1.5
+elseif( vx<0 and vy>0) then angle =angle- math.pi/2
+
+elseif(vx<0 and vy<0) then angle =angle -math.pi end 
+local dist=display.contentWidth-36-x
+ posY= math.tan(angle)*dist
+
+ 
+    if(posY>display.contentHeight)then 
+    posY=display.contentHeight-50
+	
+    elseif(posY<display.contentHeight/5+6)then
+	 posY=display.contentHeight/5+50
+	 end
+ 
+
+
+
+
+
+return posY
 end
 
 local numEgg1 = 5
@@ -85,16 +113,7 @@ local sequences_sprites = {
 	
    
 }
-local sequences_sprites2 = {
-    -- first sequence (consecutive frames)
-    {
-        name = "normalRun",
-        start = 1,
-        count = 4,
-        time = 500,
-        loopCount = 0
-    }
-}
+
 
 local background = display.newImageRect("background2.jpg", 570, 360)
 background.x = display.contentCenterX
@@ -110,21 +129,19 @@ paddle1:play()
 paddle1.x = 36
 paddle1.y = display.contentCenterY
 physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
---paddle1:scale( -1, 1)
+paddle1.myName="player"
 
 local function clickFalse()
 	
 	if(clickedKick==true)then
 		local x, y = paddle1.x, paddle1.y
-		display.remove(paddle1)
-		paddle1 = display.newSprite(sprite, sequences_sprites)
 		paddle1:setSequence("normalRun")
-		paddle1.myName="player"
+		
 		paddle1:play()
 		paddle1.x = x
 		paddle1.y = y
-		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-		--paddle1:scale( -1, 1)
+		
+		
 	end
 	
 	clickedKick = false
@@ -136,15 +153,12 @@ local function onClick(event)
 		
 		if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
-			display.remove(paddle1)
-			paddle1 = display.newSprite(sprite, sequences_sprites)
 			paddle1:setSequence("jump")
 			paddle1.myName="player"
 			paddle1:play() 
 			paddle1.x = x
 			paddle1.y = y
-			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-			--paddle1:scale( -1, 1)
+			
 		end
 		clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
@@ -152,11 +166,11 @@ local function onClick(event)
 		
 		
 		if event.phase == "began" then
-        display.getCurrentStage():setFocus( event.target, event.id )
+        --display.getCurrentStage():setFocus( event.target, event.id )
         --other code
 		end
 		if event.phase == "ended" or event.phase == "cancelled" then
-        display.getCurrentStage():setFocus( event.target, nil )
+        --display.getCurrentStage():setFocus( event.target, nil )
 		end
 		
 	     
@@ -245,7 +259,7 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 			local vx,vy= obj1:getLinearVelocity()
 			local angle=findAngle(vx,vy)
 			local length=vectorLength(vx,vy)
-			length = length+1000
+			length = length+100
 			
 	if( length>vmax)then
 	     length=vmax
@@ -261,7 +275,7 @@ elseif(obj1.myName == "ball" and obj2.myName =="wall" )
 		  local vx,vy= obj2:getLinearVelocity()
 		 local angle=findAngle(vx,vy)
 			local length=vectorLength(vx,vy)
-			length =length+1000
+			length =length+100
 			if( length>vmax)then
 	     length=vmax
 		
@@ -315,13 +329,7 @@ local function dragPaddle( event )
 	elseif ( "moved" == phase ) then
 		-- Move the paddle to the new touch position
 
-		--paddle.x = event.x - paddle.touchOffsetX
-		--if(paddle.x<xMin) then paddle.x=xMin end
-		--if(paddle.x>xMax) then paddle.x=xMax end
- 
-		--paddle.x = event.x - paddle.touchOffsetX
-		--if(paddle.x<xMin) then paddle.x=xMin end
-		--if(paddle.x>xMax) then paddle.x=xMax end
+		
 
 		paddle.y = event.y - paddle.touchOffsetY
 		if(paddle.y<yMin) then paddle.y=yMin end
@@ -329,8 +337,8 @@ local function dragPaddle( event )
         movePaddle(paddle.y)
 	elseif ( "ended" == phase or "cancelled" == phase ) then
 
-		-- Release touch focus on the paddle
-		display.currentStage:setFocus( nil )
+		
+		
 	end
 
 	return true  -- Prevents touch propagation to underlying objects
@@ -340,7 +348,7 @@ end
 display.setStatusBar( display.HiddenStatusBar)
 
 
-physics.setDrawMode( "hybrid" )
+--physics.setDrawMode( "hybrid" )
 
 
 math.randomseed( os.time() )
@@ -442,7 +450,7 @@ local sprite2= graphics.newImageSheet("DinoWest3.png", options)
 
 local paddle2 = display.newSprite(sprite2, sequences_sprites)
 paddle2:play()
-paddle2.x=display.contentWidth-80+44
+paddle2.x=display.contentWidth-36
 paddle2.y=display.contentCenterY
 physics.addBody( paddle2, "static", physicsData:get("DinoViking") )
 paddle2:scale(-1, 1)
@@ -454,7 +462,7 @@ kickBtn.isHitTestable= true
 
 local function onFrame(event)
 	
-	
+	local vx, vy = ball:getLinearVelocity()
 	
 	if(numEgg1==0 or numEgg2==0) then
 		physics.pause()
@@ -462,14 +470,16 @@ local function onFrame(event)
 		endBox.isEditable = false
 		endBox.text = "\n è finito \nPORCO DIO"
 		endBox.align = "center"
-		--endBox.hasBackground = false
+		--endBox.hasBackground = false
 		--endBox.alpha = 1.0
 		endBox.isFontSizeScaled = true 
 		endBox.size = 20	
 		end
-	
-	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y-paddle2.height/2,time=80,delay=50})
-	
+	if(ball.x>=display.contentWidth/2-36)then
+	transition.moveTo(paddle2,{x=paddle2.x,  y=AiTarget(vx,vy,ball.x,ball.y),time=200,delay=1})
+	AiTriggered=true
+	else
+	transition.moveTo(paddle2,{x=paddle2.x,  y=ball.y,time=50,delay=10})end
 	--ball:applyForce(0.1,0.1,ball.x,ball.y)
 	
 	
@@ -484,12 +494,12 @@ local function onFrame(event)
 	
 	if(ball.y<=yMin-19)
 	 then ball.y=yMin 
-	 local vx, vy = ball:getLinearVelocity()
+	 
 				ball:setLinearVelocity(vx-2,-vy+2)
 	 
 	elseif(ball.y>=yMax+21) 
 		then ball.y=yMax
-		   local vx, vy = ball:getLinearVelocity()
+		   
 				ball:setLinearVelocity(vx-2, -vy+2)
          end
 	
@@ -528,11 +538,7 @@ physics.addBody(f1oor,"static",{density=2000, friction=0.5})
 
 physics.addBody(paddle1,"static", { density=1000 })
 
-paddle1.limitUp= 22
-paddle1.limitDown=22
 
-paddle2.limitUp= 22
-paddle2.limitDown=22
 
 
 
@@ -595,7 +601,7 @@ end)
 
 dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("tap",onClick)
+kickBtn:addEventListener("touch",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
