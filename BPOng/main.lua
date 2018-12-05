@@ -78,7 +78,7 @@ local sequences_sprites = {
     },
 	-- second sequence (consecutive frames)
     {
-        name = "jump",
+        name = "kick",
         frames = { 9,10,11,12 },
         time = 500,
         loopCount = 1,
@@ -86,17 +86,6 @@ local sequences_sprites = {
     },
 	
    
-}
-local sequences_sprites2 = {
-    -- first sequence (consecutive frames)
-    {
-        name = "normalRun",
-        start = 1,
-        count = 8,
-        time = 500,
-        loopCount = 0
-    }
-	
 }
 
 local background = display.newImageRect("background.png", 570, 360)
@@ -108,7 +97,8 @@ background:scale( 1.18, 0.88)
 local sprite= graphics.newImageSheet("DinoKnight2.png", options)
 local spriteHeader = graphics.newImageSheet("DinoKnightHeader.png", options)
 
-local paddle1 = display.newSprite(sprite, sequences_sprites)	
+local paddle1 = display.newSprite(sprite, sequences_sprites)
+paddle1.myName="player"	
 paddle1:play()
 paddle1.x = 36
 paddle1.y = display.contentCenterY
@@ -119,15 +109,11 @@ local function clickFalse()
 	
 	if(clickedKick==true)then
 		local x, y = paddle1.x, paddle1.y
-		display.remove(paddle1)
-		paddle1 = display.newSprite(sprite, sequences_sprites)
 		paddle1:setSequence("normalRun")
-		paddle1.myName="player"
 		paddle1:play()
 		paddle1.x = x
 		paddle1.y = y
-		physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-		--paddle1:scale( -1, 1)
+		--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 	end
 	
 	clickedKick = false
@@ -139,15 +125,11 @@ local function onClick(event)
 		
 		if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
-			display.remove(paddle1)
-			paddle1 = display.newSprite(sprite, sequences_sprites)
-			paddle1:setSequence("jump")
-			paddle1.myName="player"
+			paddle1:setSequence("kick")
 			paddle1:play() 
 			paddle1.x = x
 			paddle1.y = y
-			physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-			--paddle1:scale( -1, 1)
+			--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
 		end
 		clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
@@ -155,11 +137,11 @@ local function onClick(event)
 		
 		
 		if event.phase == "began" then
-        display.getCurrentStage():setFocus( event.target, event.id )
+        --display.getCurrentStage():setFocus( event.target, event.id )
         --other code
 		end
 		if event.phase == "ended" or event.phase == "cancelled" then
-        display.getCurrentStage():setFocus( event.target, nil )
+        --display.getCurrentStage():setFocus( event.target, nil )
 		end
 		
 	     
@@ -333,7 +315,7 @@ local function dragPaddle( event )
 	elseif ( "ended" == phase or "cancelled" == phase ) then
 
 		-- Release touch focus on the paddle
-		display.currentStage:setFocus( nil )
+		--display.currentStage:setFocus( nil )
 	end
 
 	return true  -- Prevents touch propagation to underlying objects
@@ -599,7 +581,7 @@ end)
 
 dragBtn:addEventListener("touch",dragPaddle)
 --ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("tap",onClick)
+kickBtn:addEventListener("touch",onClick)
 
 Runtime:addEventListener( "collision", onCollisions)
 
