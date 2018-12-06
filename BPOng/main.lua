@@ -5,8 +5,6 @@
 -----------------------------------------------------------------------------------------
 
 local AI= require "AI"
-local widget = require( "widget" )
-widget.setTheme( "widget_theme_ios7" )
 
 system.activate("multitouch")
 local physicsData = (require "shapedefs").physicsData(1)
@@ -32,7 +30,7 @@ end
 local function vectorProj(length,angle)
 local uX,uY
 uX=length *math.cos(angle)
-uY=length * math.sin(angle)
+uY=length *math.sin(angle)
 return uX,uY
 end
 local function AiTarget(vx,vy,x,y)
@@ -117,24 +115,6 @@ local sequences_sprites = {
 	
    
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
-local sequences_sprites2 = {
-    -- first sequence (consecutive frames)
-    {
-        name = "normalRun",
-        start = 1,
-        count = 8,
-        time = 500,
-        loopCount = 0
-    }
-	
-}
->>>>>>> a228b2b9bf68f4e609a148788714e0bdf5d081ef
->>>>>>> ec38b1ffec82dd5dc318817ab464ed2a111a43cd
 
 local background = display.newImageRect("background.png", 570, 360)
 background.x = display.contentCenterX
@@ -158,19 +138,9 @@ local function clickFalse()
 	if(clickedKick==true)then
 		local x, y = paddle1.x, paddle1.y
 		paddle1:setSequence("normalRun")
-<<<<<<< HEAD
 		paddle1:play()
 		paddle1.x = x
 		paddle1.y = y
-		--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-=======
-		
-		paddle1:play()
-		paddle1.x = x
-		paddle1.y = y
-		
-		
->>>>>>> ec38b1ffec82dd5dc318817ab464ed2a111a43cd
 	end
 	
 	clickedKick = false
@@ -182,20 +152,12 @@ local function onClick(event)
 		
 		if(clickedKick==false)then
 			local x, y = paddle1.x, paddle1.y
-<<<<<<< HEAD
 			paddle1:setSequence("kick")
-			paddle1:play() 
-			paddle1.x = x
-			paddle1.y = y
-			--physics.addBody( paddle1, "static", physicsData:get("DinoKnight2") )
-=======
-			paddle1:setSequence("jump")
 			paddle1.myName="player"
 			paddle1:play() 
 			paddle1.x = x
 			paddle1.y = y
 			
->>>>>>> ec38b1ffec82dd5dc318817ab464ed2a111a43cd
 		end
 		clickedKick = true 
 		timer.performWithDelay(500, clickFalse)
@@ -374,13 +336,8 @@ local function dragPaddle( event )
         movePaddle(paddle.y)
 	elseif ( "ended" == phase or "cancelled" == phase ) then
 
-<<<<<<< HEAD
 		-- Release touch focus on the paddle
 		--display.currentStage:setFocus( nil )
-=======
-		
-		
->>>>>>> ec38b1ffec82dd5dc318817ab464ed2a111a43cd
 	end
 
 	return true  -- Prevents touch propagation to underlying objects
