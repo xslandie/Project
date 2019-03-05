@@ -20,4 +20,5 @@ else
   native.setProperty( "androidSystemUiVisibility", "immersiveSticky" ) 
 end
 -- load menu screen
+composer.purgeOnSceneChange = true
 composer.gotoScene( "game" )

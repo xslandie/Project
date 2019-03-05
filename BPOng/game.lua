@@ -114,8 +114,6 @@ local sequences_sprites = {
         loopCount = 1,
 		loopDirection = "forward"
     },
-	
-   
 }
 
 local background = display.newImageRect("background.png", 570, 360)
@@ -612,12 +610,6 @@ startFrameRateCalculator(function(fps)
 	timeLabel.text = "Time: " .. math.round(system.getTimer()/1000)
 end)
 
-dragBtn:addEventListener("touch",dragPaddle)
---ball:addEventListener("touch",dragPaddle)
-kickBtn:addEventListener("touch",onClick)
-
-Runtime:addEventListener( "collision", onCollisions)
-
 function scene:create( event )
 	local sceneGroup = self.view
 
@@ -626,32 +618,23 @@ function scene:create( event )
 	-- INSERT code here to initialize the scene
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
+	physics.start()
+	physics.pause()
 	-- display a background image
-	local background = display.newImageRect( "scene/menu/ui/background.jpg", display.actualContentWidth, display.actualContentHeight )
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
+	
 	
 	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "logo.png", 264, 42 )
-	titleLogo.x = display.contentCenterX
-	titleLogo.y = 100
+	
 	
 	-- create a widget button (which will loads level1.lua on release)
-	playBtn = widget.newButton{
-		label="Play Now",
-		labelColor = { default={255}, over={128} },
-		default="scene/menu/ui/button.png",
-		over="scene/menu/ui/button-over.png",
-		width=154, height=40,
-		onRelease = onPlayBtnRelease	-- event listener function
-	}
-	playBtn.x = display.contentCenterX
-	playBtn.y = display.contentHeight - 125
 	
+	
+	dragBtn:addEventListener("touch",dragPaddle)
+	kickBtn:addEventListener("touch",onClick)
+	Runtime:addEventListener( "collision", onCollisions)
+
 	-- all display objects must be inserted into group
-	sceneGroup:insert( background )
-	sceneGroup:insert( titleLogo )
-	sceneGroup:insert( playBtn )
+	
 end
 
 function scene:show( event )
@@ -665,6 +648,7 @@ function scene:show( event )
 		-- 
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
+		physics.start()
 	end	
 end
 
@@ -697,9 +681,9 @@ function scene:destroy( event )
 end
 
 
-scene:addEventListener( "createScene", scene )
-scene:addEventListener( "enterScene", scene )
-scene:addEventListener( "exitScene", scene )
-scene:addEventListener( "destroyScene", scene )
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 
 return scene
